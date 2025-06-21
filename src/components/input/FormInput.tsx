@@ -38,7 +38,7 @@ const FormInput = ({
       <div className="relative w-full">
         <input
           id={id}
-          type={view ? "text" : "password"}
+          type={isPasswordInput ? (view ? "text" : "password") : type}
           value={value}
           placeholder={placeholder}
           onChange={onChange}
