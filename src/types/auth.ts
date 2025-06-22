@@ -14,3 +14,8 @@ export interface SignUpPayload {
   password: string;
   confirmPassword: string;
 }
+
+export interface RefreshTokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}

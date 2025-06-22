@@ -18,9 +18,38 @@ export const authInstance = axios.create({
   },
 });
 
-// intercpetors를 사용하여 기존에 설정값에 header에 accessToken을 추가해주는 작업을 추상화
 authInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
+
+// 응답 인터셉터 추가 - accessToken이 만료되었을 때 /auth/refresh로 accessToken 재갱신 요청
+authInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const refreshRes = await instance.post("/auth/refresh");
+        const newAccessToken = refreshRes.data.accessToken;
+
+        localStorage.setItem("accessToken", newAccessToken);
+
+        // Authorization 헤더에 새로운 accessToken 설정 후 요청 재시도
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return authInstance(originalRequest);
+      } catch (refreshError) {
+        // refreshToken도 만료되어 accessToken 재갱신도 어려운 상황
+        console.error("토큰 갱신 실패 - 사유 : 리프레시 토큰 만료", refreshError);
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
