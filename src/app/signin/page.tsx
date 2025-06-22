@@ -16,14 +16,10 @@ export default function SignInPage() {
     register,
     handleSubmit,
     clearErrors,
-    trigger,
     formState: { errors },
   } = useForm<SignInFormValues>({ mode: "onBlur" });
 
-  const onSubmit = async () => {
-    const isOkay = await trigger(); // 제출하기 이전에 마지막 검증!
-    if (!isOkay) alert("이메일과 비밀번호를 입력해 주세요.");
-  };
+  const onSubmit = async () => {};
 
   return (
     <section className="w-[343px] h-auto flex flex-col items-center justify-center bg-white shadow-xl rounded-lg p-8">
@@ -33,7 +29,7 @@ export default function SignInPage() {
           <FormInput
             id="id"
             label="아이디"
-            type="email"
+            type="text"
             placeholder="아이디를 입력해 주세요."
             register={register("id", {
               required: "아이디는 필수입니다.",
@@ -62,7 +58,7 @@ export default function SignInPage() {
             error={errors.password}
           />
 
-          <AuthButton type="로그인" handleSubmit={onSubmit} />
+          <AuthButton type="로그인" />
         </form>
 
         <Link href="signup" className="text-[#3b82f6] block text-center mt-4 hover:underline">
