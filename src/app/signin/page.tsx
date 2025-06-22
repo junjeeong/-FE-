@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
-import { useState } from "react";
 
 interface SignInFormValues {
   id: string;
@@ -18,14 +17,12 @@ export default function SignInPage() {
     handleSubmit,
     clearErrors,
     trigger,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<SignInFormValues>({ mode: "onBlur" });
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   const onSubmit = async () => {
-    const isOkay = await trigger(); // 전체 검증 트리거
-    if (!isOkay) return;
+    const isOkay = await trigger(); // 제출하기 이전에 마지막 검증!
+    if (!isOkay) alert("이메일과 비밀번호를 입력해 주세요.");
   };
 
   return (

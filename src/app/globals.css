@@ -24,9 +24,7 @@ body {
   font-family: var(--font-pretendard), sans-serif;
 }
 
-*:focus,
-*:focus-visible {
+input:focus,
+input:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #6da3fa;
-  border-radius: 4px;
 }
