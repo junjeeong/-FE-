@@ -1,15 +1,11 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { SignInPayload } from "@/types/auth";
 import Image from "next/image";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
-
-interface SignInFormValues {
-  id: string;
-  password: string;
-}
 
 export default function SignInPage() {
   const {
@@ -17,9 +13,9 @@ export default function SignInPage() {
     handleSubmit,
     clearErrors,
     formState: { errors },
-  } = useForm<SignInFormValues>({ mode: "onBlur" });
+  } = useForm<SignInPayload>({ mode: "onBlur" });
 
-  const onSubmit = async () => {};
+  const onSubmit = async (body: SignInPayload) => {};
 
   return (
     <section className="w-[343px] h-auto flex flex-col items-center justify-center bg-white shadow-xl rounded-lg p-8">
@@ -31,15 +27,15 @@ export default function SignInPage() {
             label="아이디"
             type="text"
             placeholder="아이디를 입력해 주세요."
-            register={register("id", {
+            register={register("username", {
               required: "아이디는 필수입니다.",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.(com|net)$/,
                 message: "이메일 형식으로 입력해주세요.",
               },
-              onChange: () => clearErrors("id"),
+              onChange: () => clearErrors("username"),
             })}
-            error={errors.id}
+            error={errors.username}
           />
 
           <FormInput
