@@ -1,12 +1,14 @@
+interface TokenPair {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface SignInPayload {
   username: string;
   password: string;
 }
 
-export interface SignInResponse {
-  accessToken: string;
-  refreshToken: string;
-}
+export type SignInResponse = TokenPair;
 
 export interface SignUpPayload {
   name: string;
@@ -15,7 +17,4 @@ export interface SignUpPayload {
   confirmPassword: string;
 }
 
-export interface RefreshTokenResponse {
-  accessToken: string;
-  refreshToken: string;
-}
+export type RefreshTokenResponse = TokenPair;
