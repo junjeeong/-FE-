@@ -3,6 +3,11 @@ export interface SignInPayload {
   password: string;
 }
 
+export interface SignInResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface SignUpPayload {
   name: string;
   username: string;

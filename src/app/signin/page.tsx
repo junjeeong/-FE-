@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
+import { postSignIn } from "@/api/postSignIn";
 
 export default function SignInPage() {
   const {
@@ -15,7 +16,16 @@ export default function SignInPage() {
     formState: { errors },
   } = useForm<SignInPayload>({ mode: "onBlur" });
 
-  const onSubmit = async (body: SignInPayload) => {};
+  const onSubmit = async (body: SignInPayload) => {
+    try {
+      const res = await postSignIn(body);
+      const { accessToken } = res.data;
+      localStorage.setItem("accessToken", accessToken);
+      alert("로그인에 성공했습니다.");
+    } catch (err) {
+      alert("로그인에 실패했습니다.");
+    }
+  };
 
   return (
     <section className="w-[343px] h-auto flex flex-col items-center justify-center bg-white shadow-xl rounded-lg p-8">

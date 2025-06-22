@@ -1,5 +1,4 @@
-import { AxiosResponse } from "axios";
-import { instance } from "@/lib/axios";
+import axios, { AxiosResponse } from "axios";
 
 interface SignInPayload {
   username: string;
@@ -12,5 +11,5 @@ interface SignInResponse {
 }
 
 export const postSignIn = async (body: SignInPayload): Promise<AxiosResponse<SignInResponse>> => {
-  return await instance.post("/auth/signin", body);
+  return await axios.post("/api/auth/signin", body);
 };
