@@ -37,8 +37,9 @@ authInstance.interceptors.response.use(
       try {
         const refreshRes = await instance.post("/auth/refresh");
         const newAccessToken = refreshRes.data.accessToken;
+        const expiresAt = Date.now() + 100 * 60 * 15;
 
-        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("auth", JSON.stringify({ accessToken: newAccessToken, expiresAt }));
 
         // Authorization 헤더에 새로운 accessToken 설정 후 요청 재시도
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
