@@ -5,8 +5,6 @@ import { SignInResponse } from "@/types/auth";
 export async function POST(req: Request) {
   const payload = await req.json();
 
-  console.log(payload);
-
   try {
     const res = await instance.post<SignInResponse>("/auth/signin", payload);
     const { refreshToken, accessToken } = res.data;

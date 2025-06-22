@@ -24,6 +24,10 @@ export default function SignUpPage() {
       const res = await postSignUp(data);
       if (res.status >= 200 && res.status < 300) {
         alert("회원가입에 성공했습니다. 다시 로그인 해주세요.");
+        localStorage.setItem(
+          "profile",
+          JSON.stringify({ name: data.name, username: data.username }),
+        );
         router.push("/signin");
       }
     } catch (err) {

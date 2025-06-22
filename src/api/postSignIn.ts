@@ -1,14 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-
-interface SignInPayload {
-  username: string;
-  password: string;
-}
-
-interface SignInResponse {
-  accessToken: string;
-  refreshToken: string;
-}
+import { SignInPayload, SignInResponse } from "@/types/auth";
 
 export const postSignIn = async (body: SignInPayload): Promise<AxiosResponse<SignInResponse>> => {
   return await axios.post("/api/auth/signin", body);

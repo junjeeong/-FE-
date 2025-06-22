@@ -1,12 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { SignInPayload } from "@/types/auth";
+import { postSignIn } from "@/api/postSignIn";
 import Image from "next/image";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
-import { postSignIn } from "@/api/postSignIn";
 
 export default function SignInPage() {
   const {
@@ -16,12 +17,23 @@ export default function SignInPage() {
     formState: { errors },
   } = useForm<SignInPayload>({ mode: "onBlur" });
 
+  const router = useRouter();
+
   const onSubmit = async (body: SignInPayload) => {
     try {
       const res = await postSignIn(body);
       const { accessToken } = res.data;
-      localStorage.setItem("accessToken", accessToken);
-      alert("로그인에 성공했습니다.");
+      const expiresAt = Date.now() + 1000 * 60 * 15; //AccessToken이 로컬스토리지에서 만료되어야 하는 시각
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({
+          accessToken,
+          expiresAt,
+        }),
+      );
+      alert("로그인에 성공했습니다. 홈페이지로 이동합니다.");
+      router.push("/");
     } catch (err) {
       alert("로그인에 실패했습니다.");
     }
