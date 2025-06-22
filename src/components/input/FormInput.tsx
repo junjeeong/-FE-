@@ -10,20 +10,11 @@ interface FormInputProps {
   label: string;
   type: string;
   placeholder: string;
-  required?: boolean;
   register?: UseFormRegisterReturn;
   error?: FieldError;
 }
 
-const FormInput = ({
-  id,
-  label,
-  type = "text",
-  placeholder,
-  required = false,
-  register,
-  error,
-}: FormInputProps) => {
+const FormInput = ({ id, label, type = "text", placeholder, register, error }: FormInputProps) => {
   const isPasswordInput = type === "password" || type === "passwordConfirm";
   const [view, setView] = useState(false);
 
@@ -42,7 +33,6 @@ const FormInput = ({
           id={id}
           type={isPasswordInput ? (view ? "text" : "password") : type}
           placeholder={placeholder}
-          required={required}
           {...register}
           className={clsx(
             "mt-2 w-full h-14 py-4 px-6 bg-[#F3F4F6] placeholder:text-[#9CA3AF] rounded-[12px] ",

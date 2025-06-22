@@ -35,7 +35,6 @@ export default function SignInPage() {
             label="아이디"
             type="email"
             placeholder="아이디를 입력해 주세요."
-            required={true}
             register={register("id", {
               required: "아이디는 필수입니다.",
               pattern: {
@@ -52,7 +51,6 @@ export default function SignInPage() {
             label="패스워드"
             type="password"
             placeholder="비밀번호를 입력해 주세요."
-            required={true}
             register={register("password", {
               required: "비밀번호는 필수입니다.",
               pattern: {
