@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // 인증절차가 필요없는 HTTP 요청을 할 때 사용하는 인스턴스
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: "https://front-mission.bigs.or.kr/", //원래는 환경변수화 하는 것이 Best Pracitce이나, 이번 과제에서는 생략하였습니다.
   timeout: 5000,
   headers: {
@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 // 인증절차가 필요한 HTTP 요청을 할 때 사용하는 인스턴스
-const authInstance = axios.create({
+export const authInstance = axios.create({
   baseURL: "https://front-mission.bigs.or.kr/",
   timeout: 5000,
   headers: {

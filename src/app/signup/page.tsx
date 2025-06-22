@@ -1,16 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { postSignUp } from "@/api/postSignUp";
+import { SignUpPayload } from "@/types/auth";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
 
-interface SignUpFormValues {
-  name: string;
-  id: string;
-  password: string;
-  passwordConfirm: string;
-}
 export default function SignUpPage() {
   const {
     register,
@@ -18,9 +15,22 @@ export default function SignUpPage() {
     clearErrors,
     watch,
     formState: { errors },
-  } = useForm<SignUpFormValues>({ mode: "onBlur" });
+  } = useForm<SignUpPayload>({ mode: "onBlur" });
 
-  const onSubmit = async () => {};
+  const router = useRouter();
+
+  const onSubmit = async (data: SignUpPayload) => {
+    try {
+      const res = await postSignUp(data);
+      if (res.status >= 200 && res.status < 300) {
+        alert("회원가입에 성공했습니다. 다시 로그인 해주세요.");
+        router.push("/signin");
+      }
+    } catch (err) {
+      console.error("회원가입 실패", err);
+      alert("회원가입에 실패했습니다.");
+    }
+  };
 
   return (
     <section className="w-[343px] h-auto flex flex-col items-center justify-center bg-white shadow-xl rounded-lg p-8">
@@ -42,19 +52,19 @@ export default function SignUpPage() {
             error={errors.name}
           />
           <FormInput
-            id="id"
+            id="username"
             label="아이디"
             type="text"
             placeholder="아이디를 입력해 주세요."
-            register={register("id", {
+            register={register("username", {
               required: "아이디는 필수입니다.",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.(com|net)$/,
                 message: "이메일 형식으로 입력해주세요.",
               },
-              onChange: () => clearErrors("id"),
+              onChange: () => clearErrors("username"),
             })}
-            error={errors.id}
+            error={errors.username}
           />
           <FormInput
             id="password"
@@ -72,16 +82,16 @@ export default function SignUpPage() {
             error={errors.password}
           />
           <FormInput
-            id="passwordConfirm"
+            id="confirmPassword"
             label="비밀번호 확인"
             type="password"
             placeholder="비밀번호를 입력해 주세요."
-            register={register("passwordConfirm", {
+            register={register("confirmPassword", {
               required: "비밀번호는 필수입니다.",
               validate: (value) => value === watch("password") || "비밀번호가 일치하지 않습니다.",
-              onChange: () => clearErrors("passwordConfirm"),
+              onChange: () => clearErrors("confirmPassword"),
             })}
-            error={errors.passwordConfirm}
+            error={errors.confirmPassword}
           />
           <AuthButton type="회원가입" />
         </form>

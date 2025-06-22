@@ -15,7 +15,7 @@ interface FormInputProps {
 }
 
 const FormInput = ({ id, label, type = "text", placeholder, register, error }: FormInputProps) => {
-  const isPasswordInput = type === "password" || type === "passwordConfirm";
+  const isPasswordInput = type === "password" || type === "confirmPassword";
   const [view, setView] = useState(false);
 
   const togglePasswordView = (e: MouseEvent<HTMLButtonElement>) => {
