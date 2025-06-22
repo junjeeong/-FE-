@@ -1,27 +1,20 @@
 "use client";
 
 import { MouseEvent, useState } from "react";
+import { UseFormRegisterReturn, FieldError } from "react-hook-form";
 import Image from "next/image";
+import clsx from "clsx";
 
 interface FormInputProps {
   id: string;
   label: string;
   type: string;
   placeholder: string;
-  value?: string;
-  onChange?: () => void;
-  required?: boolean;
+  register?: UseFormRegisterReturn;
+  error?: FieldError;
 }
 
-const FormInput = ({
-  id,
-  label,
-  type = "text",
-  placeholder,
-  value,
-  onChange,
-  required = false,
-}: FormInputProps) => {
+const FormInput = ({ id, label, type = "text", placeholder, register, error }: FormInputProps) => {
   const isPasswordInput = type === "password" || type === "passwordConfirm";
   const [view, setView] = useState(false);
 
@@ -39,17 +32,15 @@ const FormInput = ({
         <input
           id={id}
           type={isPasswordInput ? (view ? "text" : "password") : type}
-          value={value}
           placeholder={placeholder}
-          onChange={onChange}
-          required={required}
-          className="mt-2 w-full h-14 py-4 px-6 bg-[#F3F4F6] placeholder:text-[#9CA3AF] rounded-[12px]"
+          {...register}
+          className={clsx(
+            "mt-2 w-full h-14 py-4 px-6 bg-[#F3F4F6] placeholder:text-[#9CA3AF] rounded-[12px] ",
+            error && "border border-red-500",
+          )}
         />
         {isPasswordInput && (
-          <button
-            onClick={togglePasswordView}
-            className="absolute right-4 top-1/2 -translate-y-1/3"
-          >
+          <button onClick={togglePasswordView} className="absolute right-4 top-[24px]">
             <Image
               src={view ? "/icon/visible.svg" : "/icon/unvisible.svg"}
               width={24}
@@ -58,6 +49,14 @@ const FormInput = ({
             />
           </button>
         )}
+        <p
+          className={clsx(
+            "text-red-500 text-xs pt-2 pl-2 min-h-[1.25rem]",
+            !error?.message && "invisible",
+          )}
+        >
+          {error?.message || ""}
+        </p>
       </div>
     </div>
   );
