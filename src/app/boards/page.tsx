@@ -6,8 +6,11 @@ const BoardsPage = () => {
   return (
     <>
       <Header />
-      {/* <BoardListContainer /> */}
-      {/* <PaginationBar /> */}
+      <div className="mt-[70px]" />
+      <main className="flex justify-center w-full bg-white p-8">
+        <BoardListContainer />
+        {/* <PaginationBar /> */}
+      </main>
     </>
   );
 };
