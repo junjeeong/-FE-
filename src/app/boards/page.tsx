@@ -3,7 +3,7 @@ import CreateAritcleFloatingButton from "@/app/boards/components/CreateAritcleFl
 import Header from "@/app/boards/components/Header";
 import PaginationBar from "@/app/boards/components/PaginationBar";
 
-const BoardsPage = ({ searchParams }: { searchParams: { page: string } }) => {
+const BoardsPage = async ({ searchParams }: { searchParams: { page: string } }) => {
   const page = Number(searchParams.page ?? "1");
 
   return (

@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 
 const getAllArticles = async (page: number = 0, pageSize: number = 10) => {
   try {
-    const res = await authInstance.get(`/boards?page=${page}&size=${pageSize}`);
+    const res = await authInstance.get(`/boards?page=${page - 1}&size=${pageSize}`);
     return res.data;
   } catch (err) {
     const axiosErr = err as AxiosError;
