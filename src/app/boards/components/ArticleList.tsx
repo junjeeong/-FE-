@@ -1,13 +1,14 @@
-import { BoardDetailData } from "@/types/boards";
-import Article from "@/app/boards/components/Article";
+import { BoardPreviewData } from "@/types/boards";
 
-const ArticleList = ({ list }: { list: BoardDetailData[] }) => {
+const ArticleList = ({ list }: { list: BoardPreviewData[] }) => {
   return (
     <ul className="w-full grid grid-cols-4 grid-rows-4 gap-4">
       {list ? (
         list.map((el) => (
           <li key={el.id} className="flex justify-center items-center w-full h-full">
-            <Article info={el} />
+            <h3>{el.title}</h3>
+            <p>{el.category}</p>
+            <p>{el.createdAt}</p>
           </li>
         ))
       ) : (

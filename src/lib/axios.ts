@@ -51,7 +51,9 @@ authInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshRes = await instance.post("/auth/refresh");
+        const refreshRes = await axios.post("http://localhost:3000/api/auth/refresh");
+        console.log("refreshRes는?", refreshRes);
+
         const newAccessToken = refreshRes.data.accessToken;
         const expiresAt = Date.now() + 100 * 60 * 15;
 

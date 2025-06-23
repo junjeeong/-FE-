@@ -4,6 +4,13 @@ export interface BoardData {
   category: string;
 }
 
+export interface BoardPreviewData {
+  id: number;
+  title: string;
+  category: string;
+  createdAt: string;
+}
+
 export interface BoardDetailData {
   id: number;
   title: string;

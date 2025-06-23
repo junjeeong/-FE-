@@ -9,9 +9,9 @@ const BoardMain = async ({ currentPage }: { currentPage: number }) => {
 
   try {
     const res = await getAllArticles(Number(currentPage));
-    console.log("받아온 res는?", res);
+    console.log("받아온 res는?", res.content);
 
-    boardList = res.data;
+    boardList = res.content;
     console.log("받아온 boardList", boardList);
   } catch (err) {
     console.error(err);
