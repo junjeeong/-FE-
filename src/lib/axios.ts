@@ -18,7 +18,7 @@ export const authInstance = axios.create({
   },
 });
 
-authInstance.interceptors.request.use((config) => {
+authInstance.interceptors.request.use(async (config) => {
   const isClient = typeof window !== "undefined";
 
   if (isClient) {
@@ -27,17 +27,15 @@ authInstance.interceptors.request.use((config) => {
       config.headers.Authorization = `Bearer ${token}`;
     }
   } else {
-    (async () => {
-      try {
-        const { cookies } = await import("next/headers");
-        const token = cookies().get("accessToken")?.value;
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-      } catch (e) {
-        console.error("서버에서 쿠키 접근 중 에러", e);
+    try {
+      const { cookies } = await import("next/headers");
+      const token = cookies().get("accessToken")?.value;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
-    })();
+    } catch (e) {
+      console.error("서버에서 쿠키 접근 중 에러", e);
+    }
   }
   return config;
 });
@@ -46,6 +44,8 @@ authInstance.interceptors.request.use((config) => {
 authInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("서버에서 요청받는 에러", error.message);
+
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
