@@ -19,9 +19,25 @@ export const authInstance = axios.create({
 });
 
 authInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const isClient = typeof window !== "undefined";
+
+  if (isClient) {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } else {
+    (async () => {
+      try {
+        const { cookies } = await import("next/headers");
+        const token = cookies().get("accessToken")?.value;
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      } catch (e) {
+        console.error("서버에서 쿠키 접근 중 에러", e);
+      }
+    })();
   }
   return config;
 });

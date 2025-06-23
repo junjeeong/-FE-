@@ -1,4 +1,4 @@
-interface BoardData {
+export interface BoardData {
   title: string;
   content: string;
   category: string;

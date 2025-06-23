@@ -1,7 +1,7 @@
 import { BoardDetailData } from "@/types/boards";
 import Image from "next/image";
 
-const BoardItem = ({ info }: { info: BoardDetailData }) => {
+const Article = ({ info }: { info: BoardDetailData }) => {
   const { title, content, boardCategory, imageUrl, createdAt } = info;
   const formattedContent = content.length > 12 ? content.slice(0, 12) + "..." : content;
 
@@ -25,4 +25,4 @@ const BoardItem = ({ info }: { info: BoardDetailData }) => {
   );
 };
 
-export default BoardItem;
+export default Article;
