@@ -1,5 +1,4 @@
 import Title from "@/app/boards/components/Title";
-import CategoryList from "@/app/boards/components/CategoryList";
 import SearchArticleBar from "@/app/boards/components/SearchArticleBar";
 import ArticleList from "@/app/boards/components/ArticleList";
 import getAllArticles from "@/api/getAllArticles";
@@ -18,10 +17,11 @@ const BoardMain = async ({ currentPage }: { currentPage: number }) => {
   }
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-[1200px]">
-      <Title />
-      <CategoryList />
-      <SearchArticleBar />
+    <div className="flex w-full max-w-[1200px] flex-col gap-6">
+      <div className="flex items-center">
+        <Title content="전체" />
+        <SearchArticleBar />
+      </div>
       <ArticleList list={boardList} />
     </div>
   );
