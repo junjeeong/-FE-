@@ -4,11 +4,13 @@ const CategoryList = () => {
   const list = ["공지", "자유", "Q&A", "기타"];
 
   return (
-    <section className="flex gap-8">
-      {list.map((el) => (
-        <CategoryItem name={el} />
+    <ul className="flex gap-8">
+      {list.map((el, index) => (
+        <li key={index}>
+          <CategoryItem name={el} />
+        </li>
       ))}
-    </section>
+    </ul>
   );
 };
 

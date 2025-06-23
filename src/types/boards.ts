@@ -1,9 +1,16 @@
-export type Category = "NOTICE" | "FREE" | "QNA" | "ETC";
-
 interface BoardData {
   title: string;
   content: string;
-  category: Category;
+  category: string;
+}
+
+export interface BoardDetailData {
+  id: number;
+  title: string;
+  content: string;
+  boardCategory: string;
+  imageUrl: string;
+  createdAt: string;
 }
 
 export type PostBoardData = BoardData;
