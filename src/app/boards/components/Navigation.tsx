@@ -1,61 +1,55 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 
 const Navigation = () => {
-  const pathname = usePathname();
-
-  const isMainPage = pathname === "/boards";
-  const isNoticePage = pathname === "/boards/notice";
-  const isFreePage = pathname === "/boards/free";
-  const isQnaPage = pathname === "/boards/qna";
-  const isEtcPage = pathname === "/boards/etc";
+  const category = useParams().category;
 
   return (
-    <div className="flex gap-2 mr-auto">
+    <div className="mr-auto flex gap-2">
       <Link
         href="/boards"
         className={clsx(
-          "flex-1 text-lg font-bold h-full flex items-center text-[#4B5563] ml-6 hover:text-blue-400",
-          isMainPage ? "text-blue-400 pointer-events-none" : "",
+          "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400",
+          category === "all" ? "pointer-events-none text-blue-400" : "",
         )}
       >
         전체
       </Link>
       <Link
-        href="/boards/notice"
+        href="/boards?category=NOTICE"
         className={clsx(
-          "flex-1 text-lg font-bold h-full flex items-center text-[#4B5563] ml-6 hover:text-blue-400",
-          isNoticePage ? "text-blue-400 pointer-events-none" : "",
+          "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400",
+          category === "NOTICE" ? "pointer-events-none text-blue-400" : "",
         )}
       >
         공지
       </Link>
       <Link
-        href="/boards/free"
+        href="/boards?category=FREE"
         className={clsx(
-          "flex-1 text-lg font-bold h-full flex items-center text-[#4B5563] ml-6 hover:text-blue-400",
-          isFreePage ? "text-blue-400 pointer-events-none" : "",
+          "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400",
+          category === "FREE" ? "pointer-events-none text-blue-400" : "",
         )}
       >
         자유
       </Link>
       <Link
-        href="/boards/qna"
+        href="/boards?category=Q&A"
         className={clsx(
-          "flex-1 text-lg font-bold h-full flex items-center text-[#4B5563] ml-6 hover:text-blue-400",
-          isQnaPage ? "text-blue-400 pointer-events-none" : "",
+          "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400",
+          category === "Q&A" ? "pointer-events-none text-blue-400" : "",
         )}
       >
         질문
       </Link>
       <Link
-        href="/boards/etc"
+        href="/boards?category=ETC"
         className={clsx(
-          "flex-1 text-lg font-bold h-full flex items-center text-[#4B5563] ml-6 hover:text-blue-400",
-          isEtcPage ? "text-blue-400 pointer-events-none" : "",
+          "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400",
+          category === "ETC" ? "pointer-events-none text-blue-400" : "",
         )}
       >
         기타
