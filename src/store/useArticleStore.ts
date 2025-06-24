@@ -9,9 +9,15 @@ const initialState: ArticlesByCategory = {
 };
 
 export const useArticleStore = create<ArticleStore>((set, get) => ({
+  allArticles: [],
   articlesByCategory: initialState,
 
-  setArticles: (category, articles) =>
+  setAllArticles: (articles) =>
+    set(() => ({
+      allArticles: articles,
+    })),
+
+  setArticlesByCategory: (category, articles) =>
     set((state) => ({
       articlesByCategory: {
         ...state.articlesByCategory,

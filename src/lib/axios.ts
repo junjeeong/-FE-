@@ -22,9 +22,12 @@ authInstance.interceptors.request.use(async (config) => {
   const isClient = typeof window !== "undefined";
 
   if (isClient) {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const accessToken = localStorage.getItem("auth")
+      ? JSON.parse(localStorage.getItem("auth")!).accessToken
+      : null;
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
   } else {
     try {
