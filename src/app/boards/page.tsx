@@ -1,11 +1,13 @@
-import BoardListContainer from "@/app/boards/components/BoardListContainer";
+import BoardMain from "@/app/boards/components/BoardMain";
 import PaginationBar from "@/app/boards/components/PaginationBar";
 
-const BoardsPage = () => {
+const BoardsPage = async ({ searchParams }: { searchParams: { page: string } }) => {
+  const page = Number(searchParams.page ?? "1");
+
   return (
-    <main className="relative flex flex-col gap-8 justify-center w-full bg-white p-8 ">
-      <BoardListContainer />
-      <PaginationBar />
+    <main className="relative flex flex-col justify-center w-full bg-white p-8 ">
+      <BoardMain currentPage={page} />
+      <PaginationBar currentPage={page} />
     </main>
   );
 };

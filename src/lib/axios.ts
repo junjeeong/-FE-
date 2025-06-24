@@ -18,10 +18,24 @@ export const authInstance = axios.create({
   },
 });
 
-authInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+authInstance.interceptors.request.use(async (config) => {
+  const isClient = typeof window !== "undefined";
+
+  if (isClient) {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } else {
+    try {
+      const { cookies } = await import("next/headers");
+      const token = cookies().get("accessToken")?.value;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (e) {
+      console.error("서버에서 쿠키 접근 중 에러", e);
+    }
   }
   return config;
 });
@@ -30,12 +44,16 @@ authInstance.interceptors.request.use((config) => {
 authInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("서버에서 요청받는 에러", error.message);
+
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshRes = await instance.post("/auth/refresh");
+        const refreshRes = await axios.post("http://localhost:3000/api/auth/refresh");
+        console.log("refreshRes는?", refreshRes);
+
         const newAccessToken = refreshRes.data.accessToken;
         const expiresAt = Date.now() + 100 * 60 * 15;
 

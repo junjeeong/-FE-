@@ -1,7 +1,14 @@
-interface BoardData {
+export interface BoardData {
   title: string;
   content: string;
   category: string;
+}
+
+export interface BoardPreviewData {
+  id: number;
+  title: string;
+  category: string;
+  createdAt: string;
 }
 
 export interface BoardDetailData {

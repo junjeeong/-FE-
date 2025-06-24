@@ -52,7 +52,7 @@ export default function SignInPage() {
             register={register("username", {
               required: "아이디는 필수입니다.",
               pattern: {
-                value: /^[^\s@]+@[^\s@]+\.(com|net)$/,
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: "이메일 형식으로 입력해주세요.",
               },
               onChange: () => clearErrors("username"),
@@ -68,7 +68,7 @@ export default function SignInPage() {
             register={register("password", {
               required: "비밀번호는 필수입니다.",
               pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!%*#?&])[A-Za-z\d!%*#?&]{8,}$/,
+                value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
                 message: "8자 이상, 영문자/숫자/특수문자를 포함해야 합니다.",
               },
               onChange: () => clearErrors("password"),
