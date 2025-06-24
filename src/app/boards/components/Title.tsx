@@ -2,19 +2,19 @@ const Title = ({ category }: { category: string }) => {
   let content = "전체";
 
   switch (category) {
-    case "all":
+    case "ALL":
       content = "전체";
       break;
-    case "notice":
+    case "NOTICE":
       content = "공지";
       break;
-    case "free":
+    case "FREE":
       content = "자유";
       break;
-    case "qna":
+    case "Q&A":
       content = "Q&A";
       break;
-    case "etc":
+    case "ETC":
       content = "기타";
       break;
     default:

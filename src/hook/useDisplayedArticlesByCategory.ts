@@ -8,12 +8,18 @@ const useDisplayedArticlesByCategory = (
   category: Category,
   currentPage: number,
 ) => {
+  const { allArticles } = useArticleStore();
+
   useEffect(() => {
-    if (category == "ALL") return;
-    const { articlesByCategory } = useArticleStore.getState();
-    const filtered = articlesByCategory[category] || [];
-    const paged = seperateArticlesByPage(filtered, currentPage);
-    setDisplayedArticles(paged);
+    // 카테고리가 all이면 전체 article을 보여주고, 그 외라면 category에 해당하는 article을 보여주기
+    if (category == "ALL") {
+      setDisplayedArticles(allArticles);
+    } else {
+      const { articlesByCategory } = useArticleStore.getState();
+      const filtered = articlesByCategory[category] || [];
+      const paged = seperateArticlesByPage(filtered, currentPage);
+      setDisplayedArticles(paged);
+    }
   }, [category, currentPage]);
 };
 
