@@ -13,7 +13,7 @@ const BoardsPage = async ({ searchParams }: BoardsPageProps) => {
   const category = searchParams.category ?? "ALL"; //notice, free,qna,etc
 
   return (
-    <main className="relative flex w-full flex-col justify-center bg-white p-8">
+    <main className="flex w-full flex-col justify-center bg-white p-8">
       <BoardMain currentPage={page} category={category} />
       <PaginationBar currentPage={page} />
     </main>
