@@ -5,7 +5,7 @@ export type PatchArticlePayload = BoardData;
 export type ArticlesByCategory = {
   [K in string]: Article[];
 };
-export type Category = "all" | "NOTICE" | "FREE" | "Q&A" | "ETC";
+export type Category = "NOTICE" | "FREE" | "Q&A" | "ETC";
 
 export interface Article {
   id: number;

@@ -10,7 +10,7 @@ interface BoardsPageProps {
 
 const BoardsPage = async ({ searchParams }: BoardsPageProps) => {
   const page = Number(searchParams.page ?? "1");
-  const category = searchParams.category ?? "all";
+  const category = searchParams.category ?? "ALL"; //notice, free,qna,etc
 
   return (
     <main className="relative flex w-full flex-col justify-center bg-white p-8">

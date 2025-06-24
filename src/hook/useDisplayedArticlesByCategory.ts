@@ -9,7 +9,7 @@ const useDisplayedArticlesByCategory = (
   currentPage: number,
 ) => {
   useEffect(() => {
-    if (category == "all") return;
+    if (category == "ALL") return;
     const { articlesByCategory } = useArticleStore.getState();
     const filtered = articlesByCategory[category] || [];
     const paged = seperateArticlesByPage(filtered, currentPage);
