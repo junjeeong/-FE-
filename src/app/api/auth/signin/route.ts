@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 14,
+      maxAge: 60 * 5, // accessToken의 유효기간인 5분과 동일시
     });
 
     cookies().set("refreshToken", refreshToken, {
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 14,
+      maxAge: 60 * 60 * 24,
     });
 
     return Response.json({ accessToken });

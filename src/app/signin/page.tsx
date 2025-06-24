@@ -23,15 +23,7 @@ export default function SignInPage() {
     try {
       const res = await postSignIn(body);
       const { accessToken } = res.data;
-      const expiresAt = Date.now() + 1000 * 60 * 15; //AccessToken이 로컬스토리지에서 만료되어야 하는 시각
-
-      localStorage.setItem(
-        "auth",
-        JSON.stringify({
-          accessToken,
-          expiresAt,
-        }),
-      );
+      localStorage.setItem("accessToken", accessToken);
       alert("로그인에 성공했습니다. 홈페이지로 이동합니다.");
       router.push("/");
     } catch (err) {
@@ -40,10 +32,10 @@ export default function SignInPage() {
   };
 
   return (
-    <section className="w-[343px] h-auto flex flex-col items-center justify-center bg-white shadow-xl rounded-lg p-8">
+    <section className="flex h-auto w-[343px] flex-col items-center justify-center rounded-lg bg-white p-8 shadow-xl">
       <Image src="/icon/logo.jpeg" alt="회사 로고" width={120} height={120} />
       <div className="w-full rounded-lg">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 mt-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-2 flex flex-col gap-2">
           <FormInput
             id="id"
             label="아이디"
@@ -79,7 +71,7 @@ export default function SignInPage() {
           <AuthButton type="로그인" />
         </form>
 
-        <Link href="signup" className="text-[#3b82f6] block text-center mt-4 hover:underline">
+        <Link href="signup" className="mt-4 block text-center text-[#3b82f6] hover:underline">
           회원가입
         </Link>
       </div>
