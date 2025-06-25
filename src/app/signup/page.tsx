@@ -37,7 +37,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <section className="w-[343px] h-auto flex flex-col items-center justify-center bg-white shadow-xl rounded-lg p-8">
+    <section className="flex h-auto w-[343px] flex-col items-center justify-center rounded-lg bg-white p-8 shadow-xl">
       <div className="w-full rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <FormInput
@@ -99,7 +99,7 @@ export default function SignUpPage() {
           />
           <AuthButton type="회원가입" />
         </form>
-        <Link href="signin" className="text-[#3b82f6] block text-center mt-4 hover:underline">
+        <Link href="signin" className="mt-4 block text-center text-[#3b82f6] hover:underline">
           로그인
         </Link>
       </div>

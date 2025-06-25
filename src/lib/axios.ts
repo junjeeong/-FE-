@@ -46,14 +46,13 @@ authInstance.interceptors.response.use(
       const refreshAccessToken = async (): Promise<string | null> => {
         try {
           const res = await axios.post("/api/auth/refresh");
-          console.log("res intercept에서 refresh route에서 받아온 res는?", res);
 
-          const newAccessToken = res.data;
-          localStorage.setItem("accessToken", newAccessToken);
+          const { accessToken } = res.data;
 
-          return newAccessToken;
+          localStorage.setItem("accessToken", accessToken);
+
+          return accessToken;
         } catch (refreshError) {
-          console.error("토큰 갱신 실패 - 사유 : 리프레시 토큰 만료", refreshError);
           localStorage.removeItem("accessToken");
           window.location.href = "/signin?redirect=unauthorized";
           return Promise.reject(refreshError);
@@ -61,6 +60,7 @@ authInstance.interceptors.response.use(
       };
 
       const newAccessToken = await refreshAccessToken();
+
       if (newAccessToken) {
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return authInstance(originalRequest);

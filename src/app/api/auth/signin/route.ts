@@ -27,7 +27,6 @@ export async function POST(req: Request) {
 
     return Response.json({ accessToken });
   } catch (err) {
-    console.error("sigin route 에러", err);
     throw new Error("signin route 서버에서 로그인 요청 중 에러가 발생했습니다.");
   }
 }
