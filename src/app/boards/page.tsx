@@ -9,7 +9,7 @@ interface BoardsPageProps {
 }
 
 const BoardsPage = async ({ searchParams }: BoardsPageProps) => {
-  const page = Number(searchParams.page ?? "1");
+  const page = await Number(searchParams.page ?? "1");
   const category = (await searchParams.category) ?? "ALL";
 
   return (
