@@ -13,20 +13,28 @@ export async function POST(req: Request) {
   }
 
   try {
-    const res = await instance.post("/auth/refresh", refreshToken);
-    const { accessToken } = res.data;
+    const res = await instance.post("/auth/refresh", { refreshToken });
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken } = res.data;
 
-    cookieStore.set("accessToken", accessToken, {
+    cookieStore.set("accessToken", newAccessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 14,
+      maxAge: 60 * 5, // 유통 기한 -> 5분(백엔드 설정과 동일)
     });
 
-    return Response.json({ accessToken });
+    cookieStore.set("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 1, // 유통 기한 -> 하루
+    });
+
+    return Response.json({ accessToken: newAccessToken }); // client에서 로컬 스토리지에 저장시키기 위함
   } catch (err) {
-    console.error("refresh route api 에러", err);
+    console.error("Error eccured In /refresh/route.ts : ", err);
 
     return new Response(JSON.stringify({ message: "AccessToken 재발급 실패" }), {
       status: 401,

@@ -13,7 +13,7 @@ const useInitializeArticles = () => {
         setAllArticles(res.content);
         storeArticlesByCategory(res.content);
       } catch (err) {
-        console.error("geAllArticles 실행 도중 오류 발생", err);
+        console.error("getAllArticles 실행 도중 오류 발생", err);
       }
     };
 
