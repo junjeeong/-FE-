@@ -1,16 +1,18 @@
+"use server";
+
 import BoardMain from "@/app/boards/components/BoardMain";
 import PaginationBar from "@/app/boards/components/PaginationBar";
 
 interface BoardsPageProps {
-  searchParams: {
-    page: string;
-    category: string;
-  };
+  searchParams: Promise<{
+    page?: string;
+    category?: string;
+  }>;
 }
-
 const BoardsPage = async ({ searchParams }: BoardsPageProps) => {
-  const page = Number(searchParams.page ?? "1");
-  const category = searchParams.category ?? "ALL";
+  const params = await searchParams;
+  const page = Number(params.page ?? "1");
+  const category = params.category ?? "ALL";
 
   return (
     <main className="flex w-full flex-col justify-center bg-white p-8">
