@@ -21,24 +21,12 @@ export const authInstance = axios.create({
 });
 
 authInstance.interceptors.request.use(async (config) => {
-  const isClient = typeof window !== "undefined";
+  const accessToken = localStorage.getItem("accessToken");
 
-  if (isClient) {
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   } else {
-    try {
-      const { cookies } = await import("next/headers");
-      const token = cookies().get("accessToken")?.value;
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    } catch (e) {
-      console.error("서버에서 쿠키 접근 중 에러", e);
-    }
+    window.location.href = "/signin?redirect=unauthorized";
   }
   return config;
 });
@@ -47,7 +35,6 @@ authInstance.interceptors.request.use(async (config) => {
 authInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const isClient = typeof window !== "undefined";
     const originalRequest = error.config;
 
     if (
@@ -58,20 +45,18 @@ authInstance.interceptors.response.use(
 
       const refreshAccessToken = async (): Promise<string | null> => {
         try {
-          const refreshRes = isClient
-            ? await axios.post("/api/auth/refresh")
-            : await instance.post("/auth/refresh");
+          const res = await axios.post("/api/auth/refresh");
+          console.log("res intercept에서 refresh route에서 받아온 res는?", res);
 
-          const newAccessToken = refreshRes.data.accessToken;
-
-          if (isClient) {
-            localStorage.setItem("accessToken", newAccessToken);
-          }
+          const newAccessToken = res.data;
+          localStorage.setItem("accessToken", newAccessToken);
 
           return newAccessToken;
         } catch (refreshError) {
           console.error("토큰 갱신 실패 - 사유 : 리프레시 토큰 만료", refreshError);
-          return null;
+          localStorage.removeItem("accessToken");
+          window.location.href = "/signin?redirect=unauthorized";
+          return Promise.reject(refreshError);
         }
       };
 
@@ -82,7 +67,6 @@ authInstance.interceptors.response.use(
       }
     }
 
-    console.log("서버에서 요청받는 에러", error.message);
     return Promise.reject(error);
   },
 );

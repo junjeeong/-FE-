@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { SignInPayload } from "@/types/auth";
 import { postSignIn } from "@/api/postSignIn";
@@ -17,6 +18,7 @@ export default function SignInPage() {
     formState: { errors },
   } = useForm<SignInPayload>({ mode: "onBlur" });
 
+  const redirectMessage = useSearchParams().get("redirect");
   const router = useRouter();
 
   const onSubmit = async (body: SignInPayload) => {
@@ -30,6 +32,10 @@ export default function SignInPage() {
       alert("로그인에 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    if (redirectMessage === "unauthorized") alert("로그인 세션이 만료되어 로그아웃 되었습니다.");
+  }, []);
 
   return (
     <section className="flex h-auto w-[343px] flex-col items-center justify-center rounded-lg bg-white p-8 shadow-xl">

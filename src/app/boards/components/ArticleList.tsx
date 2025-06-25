@@ -5,8 +5,9 @@ import { BoardPreviewData } from "@/types/boards";
 import isoStringToTime from "@/util/isoStringToTime";
 
 const ArticleList = ({ list }: { list: BoardPreviewData[] }) => {
+  const router = useRouter();
+
   const goDetailPage = (id: number) => {
-    const router = useRouter();
     router.push(`/boards/${id}`);
   };
 
