@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+import MyMenu from "@/app/boards/components/MyMenu";
+
 const ProfileIcon = ({ className }: { className?: string }) => {
   return (
     <svg
@@ -16,8 +21,13 @@ const ProfileIcon = ({ className }: { className?: string }) => {
 };
 
 const Profile = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <ProfileIcon className="size-10 hover:text-blue-400 text-gray-300 cursor-pointer transition-colors duration-75" />
+    <button onClick={() => setIsOpen((isOpen) => !isOpen)} className="relative">
+      <ProfileIcon className="size-10 cursor-pointer text-gray-300 transition-colors duration-75 hover:text-blue-400" />
+      {isOpen && <MyMenu />}
+    </button>
   );
 };
 

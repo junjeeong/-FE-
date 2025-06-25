@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 // 인증절차가 필요없는 HTTP 요청을 할 때 사용하는 인스턴스
 export const instance = axios.create({
-  baseURL: "https://front-mission.bigs.or.kr/", //원래는 환경변수화 하는 것이 Best Pracitce이나, 이번 과제에서는 생략하였습니다.
+  baseURL,
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
@@ -11,7 +13,7 @@ export const instance = axios.create({
 
 // 인증절차가 필요한 HTTP 요청을 할 때 사용하는 인스턴스
 export const authInstance = axios.create({
-  baseURL: "https://front-mission.bigs.or.kr/",
+  baseURL,
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
@@ -22,9 +24,7 @@ authInstance.interceptors.request.use(async (config) => {
   const isClient = typeof window !== "undefined";
 
   if (isClient) {
-    const accessToken = localStorage.getItem("auth")
-      ? JSON.parse(localStorage.getItem("auth")!).accessToken
-      : null;
+    const accessToken = localStorage.getItem("accessToken");
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -47,31 +47,42 @@ authInstance.interceptors.request.use(async (config) => {
 authInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log("서버에서 요청받는 에러", error.message);
-
+    const isClient = typeof window !== "undefined";
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
-      try {
-        const refreshRes = await axios.post("http://localhost:3000/api/auth/refresh");
-        console.log("refreshRes는?", refreshRes);
 
-        const newAccessToken = refreshRes.data.accessToken;
-        const expiresAt = Date.now() + 100 * 60 * 15;
+      const refreshAccessToken = async (): Promise<string | null> => {
+        try {
+          const refreshRes = isClient
+            ? await axios.post("/api/auth/refresh")
+            : await instance.post("/auth/refresh");
 
-        localStorage.setItem("auth", JSON.stringify({ accessToken: newAccessToken, expiresAt }));
+          const newAccessToken = refreshRes.data.accessToken;
 
-        // Authorization 헤더에 새로운 accessToken 설정 후 요청 재시도
+          if (isClient) {
+            localStorage.setItem("accessToken", newAccessToken);
+          }
+
+          return newAccessToken;
+        } catch (refreshError) {
+          console.error("토큰 갱신 실패 - 사유 : 리프레시 토큰 만료", refreshError);
+          return null;
+        }
+      };
+
+      const newAccessToken = await refreshAccessToken();
+      if (newAccessToken) {
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return authInstance(originalRequest);
-      } catch (refreshError) {
-        // refreshToken도 만료되어 accessToken 재갱신도 어려운 상황
-        console.error("토큰 갱신 실패 - 사유 : 리프레시 토큰 만료", refreshError);
-        return Promise.reject(refreshError);
       }
     }
 
+    console.log("서버에서 요청받는 에러", error.message);
     return Promise.reject(error);
   },
 );
