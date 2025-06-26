@@ -49,7 +49,7 @@ const PaginationBar = ({ currentPage }: { currentPage: number }) => {
           key={el}
           onClick={() => navigatePage(el)}
           className={clsx(
-            "flex h-10 w-10 items-center justify-center rounded-full border-1 border-gray-300 font-semibold text-[#6B7280] hover:bg-blue-400 hover:text-white",
+            "flex h-10 w-10 items-center justify-center rounded-full border-1 border-gray-200 font-semibold text-[#6B7280] hover:bg-blue-400 hover:text-white",
             typeof el === "number" && currentPage === el ? "bg-blue-400 text-white" : "",
           )}
         >

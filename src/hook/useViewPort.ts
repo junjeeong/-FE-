@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 type Viewport = "mobile" | "tablet" | "desktop";
@@ -8,7 +10,9 @@ const getViewport = (width: number): Viewport => {
   return "desktop";
 };
 
-export default function useViewport(): Viewport {
+export default function useViewport(): Viewport | undefined {
+  if (typeof window === "undefined") return;
+
   const [viewport, setViewport] = useState<Viewport>(() => getViewport(window.innerWidth));
 
   useEffect(() => {
