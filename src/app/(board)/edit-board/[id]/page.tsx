@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { BoardData } from "@/types/boards";
+import { authInstance } from "@/lib/axios";
 import { Category } from "@/types/article";
-import ImageUploader from "@/app/(board)/boards/components/ImageUploader";
-import postArticle from "@/api/postArticle";
-import { useRouter } from "next/navigation";
+import patchArticleById from "@/api/patchArticleById";
 
 interface FormData {
   title: string;
@@ -13,7 +15,7 @@ interface FormData {
   file: File;
 }
 
-const AddBoardPage = () => {
+const EditBoardPage = () => {
   const commonLabelStyle = "text-lg font-bold text-[#1F2937]";
   const commonInputStyle = "w-full rounded-xl bg-[#F3F4F6] px-4 py-3 text-sm";
   const commonErrorStyle = "ml-2 mt-1 text-red-500 text-sm";
@@ -21,8 +23,29 @@ const AddBoardPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>();
   const router = useRouter();
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await authInstance.get<BoardData>(`/boards/${id}`);
+        console.log("이전 게시글 데이터", res.data);
+
+        reset({
+          title: res.data.title,
+          content: res.data.content,
+          category: res.data.category as Category,
+        });
+      } catch (err) {
+        console.error("데이터 로드 실패", err);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
@@ -34,19 +57,17 @@ const AddBoardPage = () => {
       category: data.category,
     };
 
+    console.log(requestPayload);
+
     formData.append(
       "request",
       new Blob([JSON.stringify(requestPayload)], { type: "application/json" }),
     );
 
-    if (data.file) {
-      formData.append("file", data.file);
-    }
-
     try {
-      const res = await postArticle(formData);
+      const res = await patchArticleById(formData, Number(id));
 
-      alert("게시글이 성공적으로 등록되었습니다.");
+      alert("게시글을 성공적으로 수정하였습니다..");
       router.push(`/boards/${res.id}`);
     } catch (err: any) {
       alert(err.message);
@@ -54,22 +75,14 @@ const AddBoardPage = () => {
   };
 
   const handleCancle = () => {
-    const confirm = window.confirm("게시글 작성을 취소하시겠습니까?");
+    const confirm = window.confirm("게시글 수정을 취소하시겠습니까?");
     if (confirm) history.go(-1);
-  };
-
-  // 중간에 confirm을 넣은 래퍼 함수
-  const handleConfirmAndSubmit = () => {
-    const confirmed = window.confirm("게시글을 등록하시겠습니까?");
-    if (confirmed) {
-      handleSubmit(onSubmit)(); // handleSubmit은 함수를 반환하므로 바로 실행해야 함
-    }
   };
 
   return (
     <form
       className="relative flex flex-col gap-3 overflow-scroll"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <div className="flex">
@@ -124,12 +137,6 @@ const AddBoardPage = () => {
           className="min-h-[280px] w-full resize-none overflow-scroll rounded-xl bg-[#F3F4F6] px-4 py-2 text-sm"
         />
       </div>
-      <div>
-        <label htmlFor="image" className={commonLabelStyle}>
-          이미지
-        </label>
-        <ImageUploader />
-      </div>
 
       <div className="mt-4 flex w-full gap-2">
         <button
@@ -140,14 +147,13 @@ const AddBoardPage = () => {
         </button>
         <button
           type="submit"
-          onClick={handleConfirmAndSubmit}
           className="flex-1 rounded-xl bg-[#9CA3AF] px-6 py-3 text-base font-semibold text-white hover:bg-blue-400 active:bg-blue-400"
         >
-          등록
+          수정
         </button>
       </div>
     </form>
   );
 };
 
-export default AddBoardPage;
+export default EditBoardPage;
