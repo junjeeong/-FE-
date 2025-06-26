@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { SignInPayload } from "@/types/auth";
@@ -9,8 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-export default function SignInPage() {
+function SignInPageContent() {
   const {
     register,
     handleSubmit,
@@ -19,6 +21,7 @@ export default function SignInPage() {
   } = useForm<SignInPayload>({ mode: "onBlur" });
 
   const redirectMessage = useSearchParams().get("redirect");
+  const isRedirectedFromUnauthorized = redirectMessage === "unauthorized";
   const router = useRouter();
 
   const onSubmit = async (body: SignInPayload) => {
@@ -35,8 +38,10 @@ export default function SignInPage() {
   };
 
   useEffect(() => {
-    if (redirectMessage === "unauthorized") alert("로그인 세션이 만료되어 로그아웃 되었습니다.");
-  }, []);
+    if (isRedirectedFromUnauthorized) {
+      alert("로그인 세션이 만료되어 로그아웃 되었습니다.");
+    }
+  }, [isRedirectedFromUnauthorized]);
 
   return (
     <section className="flex h-auto w-[343px] flex-col items-center justify-center rounded-lg bg-white p-8 shadow-xl">
@@ -83,5 +88,13 @@ export default function SignInPage() {
         </Link>
       </div>
     </section>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <SignInPageContent />
+    </Suspense>
   );
 }

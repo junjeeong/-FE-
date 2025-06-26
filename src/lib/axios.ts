@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const baseURL = "https://front-mission.bigs.or.kr";
 
 // 인증절차가 필요없는 HTTP 요청을 할 때 사용하는 인스턴스
 export const instance = axios.create({
