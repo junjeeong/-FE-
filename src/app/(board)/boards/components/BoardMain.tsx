@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Article, Category } from "@/types/article";
 import { useArticleStore } from "@/store/useArticleStore";
-import Title from "@/app/boards/components/Title";
-import SearchArticleBar from "@/app/boards/components/SearchArticleBar";
-import ArticleList from "@/app/boards/components/ArticleList";
+import Title from "@/app/(board)/boards/components/Title";
+import SearchArticleBar from "@/app/(board)/boards/components/SearchArticleBar";
+import ArticleList from "@/app/(board)/boards/components/ArticleList";
 import useDisplayedArticles from "@/hook/useDisplayedArticles";
 
 interface BoardMainProps {

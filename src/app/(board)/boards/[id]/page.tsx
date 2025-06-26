@@ -55,7 +55,7 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
         </figure>
       )}
 
-      <p className="mt-20 text-base text-[#171719]">{content}</p>
+      <p className="mt-10 text-base text-[#171719]">{content}</p>
     </article>
   );
 };

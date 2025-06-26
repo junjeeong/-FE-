@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import MyMenu from "@/app/boards/components/MyMenu";
+import MyMenu from "@/app/(board)/boards/components/MyMenu";
 
 const ProfileIcon = ({ className }: { className?: string }) => {
   return (
