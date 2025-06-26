@@ -11,6 +11,7 @@ const Navigation = () => {
   const navigateToCategory = (newCategory: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("category", newCategory);
+    params.set("page", "1");
     router.push(`/boards?${params.toString()}`);
   };
 
