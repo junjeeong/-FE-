@@ -2,7 +2,7 @@
 ```shell
 git clone https://github.com/junjeeong/The-Dream-Solution_FE-Challenge.git test
 
-git cd test
+cd test
 
 npm i
 
