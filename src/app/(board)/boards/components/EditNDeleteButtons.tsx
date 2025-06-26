@@ -25,13 +25,13 @@ const EditNDeleteButtons = ({ id }: { id: string }) => {
     <div className="ml-auto flex gap-4">
       <button
         onClick={goEditPage}
-        className="rounded-lg bg-gray-500 px-6 py-2 text-white hover:bg-blue-400"
+        className="rounded-lg bg-gray-500 px-6 py-2 text-white hover:bg-blue-400 sm:text-sm"
       >
         수정
       </button>
       <button
         onClick={deleteAritcle}
-        className="rounded-lg bg-red-300 px-6 py-2 text-white hover:bg-red-400"
+        className="rounded-lg bg-red-300 px-6 py-2 text-white hover:bg-red-400 sm:text-sm"
       >
         삭제
       </button>

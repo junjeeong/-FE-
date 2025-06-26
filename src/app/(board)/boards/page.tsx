@@ -5,6 +5,7 @@ import { Category } from "@/types/article";
 import BoardMain from "@/app/(board)/boards/components/BoardMain";
 import PaginationBar from "@/app/(board)/boards/components/PaginationBar";
 import useInitializeArticles from "@/hook/useInitializeArticles";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const BoardsPage = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,7 @@ const BoardsPage = () => {
   const isInitialized = useInitializeArticles();
 
   if (!isInitialized) {
-    return <div>로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

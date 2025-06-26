@@ -42,9 +42,11 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
 
   return (
     <article className="flex h-full w-full flex-col justify-between overflow-scroll bg-white p-8">
-      <header className="mt-5 flex items-center gap-4">
-        <h2 className="text-5xl font-bold text-[#212529]">{title ? title : "제목없음"}</h2>
-        <div className="mt-auto flex gap-2 text-gray-500">
+      <header className="mt-5 flex flex-col justify-center gap-4">
+        <h2 className="text-5xl font-bold text-[#212529] sm:text-3xl">
+          {title ? title : "제목없음"}
+        </h2>
+        <div className="mt-auto flex gap-2 text-gray-500 sm:text-sm">
           <span>{boardCategory} </span>
           <span>•</span>
           <span> {isoStringToCreatedTime(createdAt)}</span>
@@ -57,7 +59,7 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
         </figure>
       )}
 
-      <p className="mt-10 mb-auto text-base text-[#171719]">{content}</p>
+      <p className="mt-10 mb-auto text-base text-[#171719] sm:text-xs">{content}</p>
 
       {isMine && <EditNDeleteButtons id={id} />}
     </article>
