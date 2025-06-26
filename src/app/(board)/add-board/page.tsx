@@ -14,6 +14,8 @@ interface FormData {
 }
 
 const AddBoardPage = () => {
+  if (typeof window === "undefined") return null;
+
   const commonLabelStyle = "text-lg font-bold text-[#1F2937]";
   const commonInputStyle = "w-full rounded-xl bg-[#F3F4F6] px-4 py-3 text-sm";
   const commonErrorStyle = "ml-2 mt-1 text-red-500 text-sm";
@@ -54,16 +56,20 @@ const AddBoardPage = () => {
   };
 
   const handleCancle = () => {
-    const confirm = window.confirm("게시글 작성을 취소하시겠습니까?");
-    if (confirm) history.go(-1);
+    if (window) {
+      const confirm = window.confirm("게시글 작성을 취소하시겠습니까?");
+      if (confirm) history.go(-1);
+    } else return;
   };
 
   // 중간에 confirm을 넣은 래퍼 함수
   const handleConfirmAndSubmit = () => {
-    const confirmed = window.confirm("게시글을 등록하시겠습니까?");
-    if (confirmed) {
-      handleSubmit(onSubmit)(); // handleSubmit은 함수를 반환하므로 바로 실행해야 함
-    }
+    if (window) {
+      const confirmed = window.confirm("게시글을 등록하시겠습니까?");
+      if (confirmed) {
+        handleSubmit(onSubmit)(); // handleSubmit은 함수를 반환하므로 바로 실행해야 함
+      }
+    } else return;
   };
 
   return (
