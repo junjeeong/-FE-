@@ -1,8 +1,7 @@
 import { AxiosError } from "axios";
 import { authInstance } from "@/lib/axios";
-import { PostArticlePayload } from "@/types/article";
 
-const postArticle = async (body: PostArticlePayload) => {
+const postArticle = async (body: FormData) => {
   try {
     const res = await authInstance.post("/boards", body);
     return res.data;

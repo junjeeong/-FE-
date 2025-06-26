@@ -1,7 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import WriteIcon from "@/app/(board)/boards/components/WriteIcon";
 
 const CreateAritcleFloatingButton = () => {
+  const pathname = usePathname();
+
+  if (pathname === "/addBoard") return;
+
   return (
     <Link href={"/addBoard"}>
       <button className="duraition-200 fixed right-6 bottom-6 flex h-[60px] w-[140px] items-center justify-between gap-2 rounded-full bg-white p-5 shadow-2xl transition-transform hover:scale-110 hover:text-blue-400">
