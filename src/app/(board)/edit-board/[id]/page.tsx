@@ -17,6 +17,8 @@ interface FormData {
 }
 
 const EditBoardPage = () => {
+  if (typeof window === "undefined") return null;
+
   const commonLabelStyle = "text-lg font-bold text-[#1F2937]";
   const commonInputStyle = "w-full rounded-xl bg-[#F3F4F6] px-4 py-3 text-sm";
   const commonErrorStyle = "ml-2 mt-1 text-red-500 text-sm";
