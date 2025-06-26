@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { Category } from "@/types/article";
 import ImageUploader from "@/app/(board)/boards/components/ImageUploader";
-import { authInstance } from "@/lib/axios";
 import postArticle from "@/api/postArticle";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   title: string;
@@ -22,18 +22,22 @@ const AddBoardPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
 
     // FormData.append()의 두 번째 인자에는 문자열 또는 Blob/File만 들어갈 수 있음. JSON 문자열로 바꿔줘야 함
-    const requestPayload = JSON.stringify({
+    const requestPayload = {
       title: data.title,
       content: data.content,
       category: data.category,
-    });
+    };
 
-    formData.append("request", requestPayload);
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(requestPayload)], { type: "application/json" }),
+    );
 
     if (data.file) {
       formData.append("file", data.file);
@@ -41,9 +45,9 @@ const AddBoardPage = () => {
 
     try {
       const res = await postArticle(formData);
+
       alert("게시글이 성공적으로 등록되었습니다.");
-      window.location.href = `/boards${res}`;
-      // 예: 라우팅 이동 등 추가 처리
+      router.push(`/boards/${res.id}`);
     } catch (err: any) {
       alert(err.message);
     }
