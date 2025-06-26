@@ -11,8 +11,6 @@ const getViewport = (width: number): Viewport => {
 };
 
 export default function useViewport(): Viewport | undefined {
-  if (typeof window === "undefined") return;
-
   const [viewport, setViewport] = useState<Viewport>(() => getViewport(window.innerWidth));
 
   useEffect(() => {
