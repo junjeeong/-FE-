@@ -5,7 +5,7 @@ export function storeArticlesByCategory(allArticles: Article[]) {
   const categorized = {
     NOTICE: [] as Article[],
     FREE: [] as Article[],
-    "Q&A": [] as Article[],
+    QNA: [] as Article[],
     ETC: [] as Article[],
   };
 

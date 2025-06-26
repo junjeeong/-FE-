@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 
 const Logo = () => {
   return (
-    <Link href="/" className="relative h-[80px] w-[80px]">
+    // 홈으로 이동할 때에는 기존 클라이언트 상태를 유지하지 않고, 서버에서 fresh한 데이터를 새로 패칭하도록 함.
+    <button onClick={() => (window.location.href = "/")} className="relative h-[80px] w-[80px]">
       <Image
         src={"/icon/logo.png"}
         fill
@@ -12,7 +14,7 @@ const Logo = () => {
         alt="로고"
         priority
       />
-    </Link>
+    </button>
   );
 };
 

@@ -11,7 +11,7 @@ const Title = ({ category }: { category: string }) => {
     case "FREE":
       content = "자유";
       break;
-    case "QnA":
+    case "QNA":
       content = "Q&A";
       break;
     case "ETC":

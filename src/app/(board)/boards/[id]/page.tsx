@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { BoardDetailData } from "@/types/boards";
 import Image from "next/image";
 import isoStringToCreatedTime from "@/util/isoStringToCreatedTime";
@@ -28,7 +29,7 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
     if (!res.ok) throw new Error("게시글 데이터를 불러오는 데 실패했습니다.");
     data = await res.json();
   } catch (err) {
-    return <div className="p-8">게시글 데이터를 불러오는 데 실패했습니다.</div>;
+    redirect("/boards");
   }
 
   if (!data) {

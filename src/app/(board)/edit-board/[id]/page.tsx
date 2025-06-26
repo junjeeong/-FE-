@@ -57,8 +57,6 @@ const EditBoardPage = () => {
       category: data.category,
     };
 
-    console.log(requestPayload);
-
     formData.append(
       "request",
       new Blob([JSON.stringify(requestPayload)], { type: "application/json" }),
@@ -68,7 +66,7 @@ const EditBoardPage = () => {
       const res = await patchArticleById(formData, Number(id));
 
       alert("게시글을 성공적으로 수정하였습니다..");
-      router.push(`/boards/${res.id}`);
+      router.push(`/boards/${id}`);
     } catch (err: any) {
       alert(err.message);
     }
@@ -114,7 +112,7 @@ const EditBoardPage = () => {
           >
             <option value="NOTICE">공지</option>
             <option value="FREE">자유</option>
-            <option value="Q&A">질문</option>
+            <option value="QNA">질문</option>
             <option value="ETC">기타</option>
           </select>
           <div className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500">
