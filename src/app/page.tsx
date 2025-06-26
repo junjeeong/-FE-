@@ -1,13 +1,13 @@
-"use client";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+export default async function Home() {
+  const cookieStore = await cookies();
+  const isLogin = cookieStore.get("refreshToken")?.value;
 
-export default function Home() {
-  const router = useRouter();
-  useEffect(() => {
-    router.push("/signin");
-  }, [router]);
-
-  return null;
+  if (isLogin) {
+    redirect("/boards");
+  } else {
+    redirect("/signin");
+  }
 }
