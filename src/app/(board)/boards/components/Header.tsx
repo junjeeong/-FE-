@@ -1,6 +1,6 @@
-import Logo from "@/app/boards/components/Logo";
-import Navigation from "@/app/boards/components/Navigation";
-import Profile from "@/app/boards/components/Profile";
+import Logo from "@/app/(board)/boards/components/Logo";
+import Navigation from "@/app/(board)/boards/components/Navigation";
+import Profile from "@/app/(board)/boards/components/Profile";
 
 const Header = () => {
   return (

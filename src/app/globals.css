@@ -18,15 +18,15 @@
   }
 }
 
+*:focus,
+*:focus-visible {
+  outline: none;
+}
+
 body {
   background: var(--background);
   color: black;
   font-family: var(--font-pretendard), sans-serif;
-}
-
-input:focus,
-input:focus-visible {
-  outline: none;
 }
 
 button {

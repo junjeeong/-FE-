@@ -2,8 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { Category } from "@/types/article";
-import BoardMain from "@/app/boards/components/BoardMain";
-import PaginationBar from "@/app/boards/components/PaginationBar";
+import BoardMain from "@/app/(board)/boards/components/BoardMain";
+import PaginationBar from "@/app/(board)/boards/components/PaginationBar";
 import useInitializeArticles from "@/hook/useInitializeArticles";
 
 const BoardsPage = () => {

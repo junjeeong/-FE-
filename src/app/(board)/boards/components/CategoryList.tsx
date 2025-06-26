@@ -1,4 +1,4 @@
-import CategoryItem from "@/app/boards/components/CategoryItem";
+import CategoryItem from "@/app/(board)/boards/components/CategoryItem";
 
 const CategoryList = () => {
   const list = ["공지", "자유", "Q&A", "기타"];
