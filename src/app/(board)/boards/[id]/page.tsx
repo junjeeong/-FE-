@@ -6,18 +6,18 @@ import isoStringToCreatedTime from "@/util/isoStringToCreatedTime";
 import EditNDeleteButtons from "@/app/(board)/boards/components/EditNDeleteButtons";
 
 interface BoardDetailPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
-  const { id } = params;
+  const { id } = await params;
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
   const isMine = true;
   let data: BoardDetailData | null = null;
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/boards/${id}`, {
+    const res = await fetch(`https://front-mission.bigs.or.kr/boards/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
   }
 
   const { title, content, boardCategory, imageUrl, createdAt } = data;
-  const formattedImageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${imageUrl}`;
+  const formattedImageUrl = `https://front-mission.bigs.or.kr${imageUrl}`;
 
   return (
     <article className="flex h-full w-full flex-col justify-between overflow-scroll bg-white p-8">
