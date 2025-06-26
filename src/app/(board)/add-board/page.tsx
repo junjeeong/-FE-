@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Category } from "@/types/article";
+import { toast } from "react-toastify";
 import ImageUploader from "@/app/(board)/boards/components/ImageUploader";
 import postArticle from "@/api/postArticle";
 
@@ -45,31 +46,17 @@ const AddBoardPage = () => {
 
     try {
       const res = await postArticle(formData);
-
-      alert("게시글이 성공적으로 등록되었습니다.");
+      toast.success("게시글이 성공적으로 등록되었습니다.");
       router.push(`/boards/${res.id}`);
     } catch (err: any) {
-      alert(err.message);
-    }
-  };
-
-  const handleCancle = () => {
-    const confirm = window.confirm("게시글 작성을 취소하시겠습니까?");
-    if (confirm) history.go(-1);
-  };
-
-  // 중간에 confirm을 넣은 래퍼 함수
-  const handleConfirmAndSubmit = () => {
-    const confirmed = window.confirm("게시글을 등록하시겠습니까?");
-    if (confirmed) {
-      handleSubmit(onSubmit)(); // handleSubmit은 함수를 반환하므로 바로 실행해야 함
+      toast.error(err.message);
     }
   };
 
   return (
     <form
       className="relative flex flex-col gap-3 overflow-scroll"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div>
         <div className="flex">
@@ -133,14 +120,13 @@ const AddBoardPage = () => {
 
       <div className="mt-4 flex w-full gap-2">
         <button
-          onClick={handleCancle}
+          onClick={() => router.back()}
           className="flex-1 rounded-xl bg-[#9CA3AF] px-6 py-3 text-base font-semibold text-white hover:bg-blue-400 active:bg-blue-400"
         >
           취소
         </button>
         <button
           type="submit"
-          onClick={handleConfirmAndSubmit}
           className="flex-1 rounded-xl bg-[#9CA3AF] px-6 py-3 text-base font-semibold text-white hover:bg-blue-400 active:bg-blue-400"
         >
           등록

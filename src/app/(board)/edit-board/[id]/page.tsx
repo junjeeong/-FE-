@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { BoardData } from "@/types/boards";
 import { authInstance } from "@/lib/axios";
 import { Category } from "@/types/article";
+import { toast } from "react-toastify";
 import patchArticleById from "@/api/patchArticleById";
 
 interface FormData {
@@ -64,16 +65,11 @@ const EditBoardPage = () => {
     try {
       const res = await patchArticleById(formData, Number(id));
 
-      alert("게시글이 성공적으로 수정되었습니다.");
+      toast.success("게시글이 성공적으로 수정되었습니다.");
       router.push(`/boards/${id}`);
     } catch (err: any) {
-      alert(err.message);
+      toast.error(err.message);
     }
-  };
-
-  const handleCancle = () => {
-    const confirm = window.confirm("게시글 수정을 취소하시겠습니까?");
-    if (confirm) history.go(-1);
   };
 
   return (
@@ -138,7 +134,7 @@ const EditBoardPage = () => {
       <div className="mt-4 flex w-full gap-2">
         <button
           type="button"
-          onClick={handleCancle}
+          onClick={() => router.back()}
           className="flex-1 rounded-xl bg-[#9CA3AF] px-6 py-3 text-base font-semibold text-white hover:bg-blue-400 active:bg-blue-400"
         >
           취소

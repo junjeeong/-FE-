@@ -11,7 +11,9 @@ const getViewport = (width: number): Viewport => {
 };
 
 export default function useViewport(): Viewport | undefined {
-  const [viewport, setViewport] = useState<Viewport>(() => getViewport(window.innerWidth));
+  const [viewport, setViewport] = useState<Viewport>(() =>
+    typeof window !== "undefined" ? getViewport(window.innerWidth) : "desktop",
+  );
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

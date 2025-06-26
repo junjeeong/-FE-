@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { pretendard } from "@/fonts/pretendard";
+import { ToastContainer } from "react-toastify";
 import MainLayout from "@/components/layout/MainLayout";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "정준영 - FE 과제",
@@ -20,6 +22,16 @@ export default function RootLayout({
     <html lang="ko" className={pretendard.variable}>
       <body>
         <MainLayout>{children}</MainLayout>
+        <ToastContainer // 보통 최하단에 위치
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </body>
     </html>
   );

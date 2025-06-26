@@ -11,6 +11,7 @@ import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { toast } from "react-toastify";
 
 function SignInPageContent() {
   const {
@@ -30,16 +31,16 @@ function SignInPageContent() {
       const { accessToken } = res.data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("profile", JSON.stringify({ username: body.username }));
-      alert("로그인에 성공했습니다. 홈페이지로 이동합니다.");
+      toast.success("로그인에 성공했습니다. 홈페이지로 이동합니다.");
       router.push("/");
     } catch (err) {
-      alert("로그인에 실패했습니다.");
+      toast.error("로그인에 실패했습니다.");
     }
   };
 
   useEffect(() => {
     if (isRedirectedFromUnauthorized) {
-      alert("로그인 세션이 만료되어 로그아웃 되었습니다.");
+      toast.success("로그인 세션이 만료되어 로그아웃 되었습니다.");
     }
   }, [isRedirectedFromUnauthorized]);
 

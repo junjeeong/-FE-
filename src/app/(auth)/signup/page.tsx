@@ -7,6 +7,7 @@ import { SignUpPayload } from "@/types/auth";
 import Link from "next/link";
 import AuthButton from "@/components/button/AuthButton";
 import FormInput from "@/components/input/FormInput";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
   const {
@@ -23,7 +24,7 @@ export default function SignUpPage() {
     try {
       const res = await postSignUp(data);
       if (res.status >= 200 && res.status < 300) {
-        alert("회원가입에 성공했습니다. 다시 로그인 해주세요.");
+        toast.success("회원가입에 성공했습니다. 다시 로그인 해주세요.");
         localStorage.setItem(
           "profile",
           JSON.stringify({ name: data.name, username: data.username }),
@@ -32,7 +33,7 @@ export default function SignUpPage() {
       }
     } catch (err) {
       console.error("회원가입 실패", err);
-      alert("회원가입에 실패했습니다.");
+      toast.error("회원가입에 실패했습니다.");
     }
   };
 

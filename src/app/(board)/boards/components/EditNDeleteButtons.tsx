@@ -2,23 +2,22 @@
 
 import { authInstance } from "@/lib/axios";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const EditNDeleteButtons = ({ id }: { id: string }) => {
   const router = useRouter();
 
   const goEditPage = () => {
-    if (confirm("게시글을 수정하겠습니까?")) {
-      router.push(`/edit-board/${id}`);
-    } else return;
+    router.push(`/edit-board/${id}`);
   };
 
   const deleteAritcle = async () => {
-    if (confirm("게시글을 삭제하겠습니까?")) {
-      const res = await authInstance.delete(`/boards/${id}`);
-      if (res.status >= 200 && res.status < 300) window.location.href = "/boards";
-      else if (res.status == 400) alert("권한이 없습니다.");
-      else alert("네트워크 에러로 게시글 삭제에 실패했습니다.");
-    } else return;
+    toast.warning("게시글을 삭제했습니다.");
+
+    const res = await authInstance.delete(`/boards/${id}`);
+    if (res.status >= 200 && res.status < 300) router.push("/boards");
+    else if (res.status == 400) toast.error("권한이 없습니다.");
+    else toast.error("네트워크 에러로 게시글 삭제에 실패했습니다.");
   };
 
   return (
