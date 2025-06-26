@@ -4,12 +4,12 @@ import { SignInResponse } from "@/types/auth";
 
 export async function POST(req: Request) {
   const payload = await req.json();
-
+  const cookieStore = await cookies();
   try {
     const res = await instance.post<SignInResponse>("/auth/signin", payload);
     const { refreshToken, accessToken } = res.data;
 
-    cookies().set("accessToken", accessToken, {
+    cookieStore.set("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       maxAge: 60 * 5, // accessToken의 유효기간인 5분과 동일시
     });
 
-    cookies().set("refreshToken", refreshToken, {
+    cookieStore.set("refreshToken", refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
