@@ -4,6 +4,8 @@ import useViewport from "@/hook/useViewPort";
 import Image from "next/image";
 
 const Logo = () => {
+  if (typeof window === "undefined") return;
+
   const view = useViewport();
 
   return (

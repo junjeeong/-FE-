@@ -43,7 +43,7 @@ const PaginationBar = ({ currentPage }: { currentPage: number }) => {
   };
 
   return (
-    <ol className="absolute flex gap-1 sm:top-8 sm:right-8 md:bottom-4 md:left-1/2 md:-translate-x-1/2 lg:bottom-4 lg:left-1/2 lg:-translate-x-1/2">
+    <ol className="absolute flex gap-1 sm:top-0 sm:right-0 md:bottom-4 md:left-1/2 md:-translate-x-1/2 lg:bottom-4 lg:left-1/2 lg:-translate-x-1/2">
       {list.map((el) => (
         <button
           key={el}

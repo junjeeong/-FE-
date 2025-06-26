@@ -1,11 +1,32 @@
-import { Suspense } from "react";
-import BoardsContent from "@/app/(board)/boards/BoardsContent";
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { Category } from "@/types/article";
+import BoardMain from "@/app/(board)/boards/components/BoardMain";
+import PaginationBar from "@/app/(board)/boards/components/PaginationBar";
+import useInitializeArticles from "@/hook/useInitializeArticles";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-export default function Page() {
+const BoardsContent = () => {
+  if (typeof window === "undefined") return;
+
+  const searchParams = useSearchParams();
+  const page = Number(searchParams.get("page") ?? "1");
+  const category = searchParams.get("category") ?? "ALL";
+
+  // 최초 마운트 시, 전역 store에 allArticles, ArticlesByCategory를 set해줌
+  const isInitialized = useInitializeArticles();
+
+  if (!isInitialized) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <Suspense>
-      <BoardsContent />
-    </Suspense>
+    <div className="relative h-full w-full">
+      <BoardMain currentPage={page} category={category as Category} />
+      <PaginationBar currentPage={page} />
+    </div>
   );
-}
+};
+
+export default BoardsContent;
