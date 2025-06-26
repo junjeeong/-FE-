@@ -32,7 +32,6 @@ const EditBoardPage = () => {
     const fetchData = async () => {
       try {
         const res = await authInstance.get<BoardData>(`/boards/${id}`);
-        console.log("이전 게시글 데이터", res.data);
 
         reset({
           title: res.data.title,
@@ -40,7 +39,7 @@ const EditBoardPage = () => {
           category: res.data.category as Category,
         });
       } catch (err) {
-        console.error("데이터 로드 실패", err);
+        console.error("이전 데이터 불러오기 실패", err);
       }
     };
 
@@ -65,7 +64,7 @@ const EditBoardPage = () => {
     try {
       const res = await patchArticleById(formData, Number(id));
 
-      alert("게시글을 성공적으로 수정하였습니다..");
+      alert("게시글이 성공적으로 수정되었습니다.");
       router.push(`/boards/${id}`);
     } catch (err: any) {
       alert(err.message);
@@ -138,6 +137,7 @@ const EditBoardPage = () => {
 
       <div className="mt-4 flex w-full gap-2">
         <button
+          type="button"
           onClick={handleCancle}
           className="flex-1 rounded-xl bg-[#9CA3AF] px-6 py-3 text-base font-semibold text-white hover:bg-blue-400 active:bg-blue-400"
         >

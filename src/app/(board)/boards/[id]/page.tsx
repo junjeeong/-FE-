@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { BoardDetailData } from "@/types/boards";
 import Image from "next/image";
 import isoStringToCreatedTime from "@/util/isoStringToCreatedTime";
+import EditNDeleteButtons from "@/app/(board)/boards/components/EditNDeleteButtons";
 
 interface BoardDetailPageProps {
   params: { id: string };
@@ -12,7 +13,7 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
   const { id } = params;
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
-
+  const isMine = true;
   let data: BoardDetailData | null = null;
 
   try {
@@ -40,7 +41,7 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
   const formattedImageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${imageUrl}`;
 
   return (
-    <article className="flex w-full flex-col justify-center overflow-scroll bg-white p-8">
+    <article className="flex h-full w-full flex-col justify-between overflow-scroll bg-white p-8">
       <header className="mt-5 flex items-center gap-4">
         <h2 className="text-5xl font-bold text-[#212529]">{title ? title : "제목없음"}</h2>
         <div className="mt-auto flex gap-2 text-gray-500">
@@ -56,7 +57,9 @@ const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
         </figure>
       )}
 
-      <p className="mt-10 text-base text-[#171719]">{content}</p>
+      <p className="mt-10 mb-auto text-base text-[#171719]">{content}</p>
+
+      {isMine && <EditNDeleteButtons id={id} />}
     </article>
   );
 };

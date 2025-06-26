@@ -11,8 +11,6 @@ const patchArticleById = async (body: FormData, id: number) => {
     return res.data;
   } catch (err) {
     const axiosErr = err as AxiosError;
-    console.log(axiosErr.response?.data);
-
     throw new Error(`게시글 수정에 실패했습니다 : ${axiosErr.message}`);
   }
 };
