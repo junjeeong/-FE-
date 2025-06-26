@@ -18,6 +18,7 @@ const PaginationBar = ({ currentPage }: { currentPage: number }) => {
 
   const { totalCount } = data;
   const totalPages = Math.ceil(totalCount / 10);
+  if (totalPages < 2) return;
   const pageList = Array.from({ length: totalPages }, (_, i) => i + 1);
   const list = ["<", ...pageList, ">"];
 
@@ -41,22 +42,20 @@ const PaginationBar = ({ currentPage }: { currentPage: number }) => {
   };
 
   return (
-    totalCount && (
-      <ol className="mx-auto mt-8 flex gap-1">
-        {list.map((el) => (
-          <button
-            key={el}
-            onClick={() => navigatePage(el)}
-            className={clsx(
-              "flex h-12 w-12 items-center justify-center rounded-full border-1 border-gray-300 font-semibold text-[#6B7280] hover:bg-blue-400 hover:text-white",
-              typeof el === "number" && currentPage === el ? "bg-blue-400 text-white" : "",
-            )}
-          >
-            {el}
-          </button>
-        ))}
-      </ol>
-    )
+    <ol className="mx-auto mt-8 flex gap-1">
+      {list.map((el) => (
+        <button
+          key={el}
+          onClick={() => navigatePage(el)}
+          className={clsx(
+            "flex h-12 w-12 items-center justify-center rounded-full border-1 border-gray-300 font-semibold text-[#6B7280] hover:bg-blue-400 hover:text-white",
+            typeof el === "number" && currentPage === el ? "bg-blue-400 text-white" : "",
+          )}
+        >
+          {el}
+        </button>
+      ))}
+    </ol>
   );
 };
 

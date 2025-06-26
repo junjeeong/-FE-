@@ -1,40 +1,63 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { cookies } from "next/headers";
 import { BoardDetailData } from "@/types/boards";
-import { useParams } from "next/navigation";
-import getArticleById from "@/api/getArticleById";
+import Image from "next/image";
+import isoStringToCreatedTime from "@/util/isoStringToCreatedTime";
 
-const BoardDetailPage = () => {
-  const { id } = useParams();
-  const [info, setInfo] = useState<BoardDetailData>({
-    id: 0,
-    title: "",
-    content: "",
-    boardCategory: "",
-    imageUrl: "",
-    createdAt: "",
-  });
+interface BoardDetailPageProps {
+  params: { id: string };
+}
 
-  const [error, setError] = useState<string | null>(null);
+const BoardDetailPage = async ({ params }: BoardDetailPageProps) => {
+  const { id } = params;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getArticleById(Number(id));
-        setInfo(data);
-      } catch (err: any) {
-        setError(err.message);
-      }
-    };
+  let data: BoardDetailData | null = null;
 
-    fetchData();
-  }, [id]);
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/boards/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      next: {
+        tags: [`board-${id}`],
+      },
+    });
 
-  if (error) return <div>{error}</div>;
-  if (!info) return <div>로딩 중...</div>;
+    if (!res.ok) throw new Error("게시글 데이터를 불러오는 데 실패했습니다.");
+    data = await res.json();
+  } catch (err) {
+    return <div className="p-8">게시글 데이터를 불러오는 데 실패했습니다.</div>;
+  }
 
-  return <div>{/* info를 바탕으로 JSX 렌더링 */}</div>;
+  if (!data) {
+    return <div className="p-8">데이터가 존재하지 않습니다.</div>;
+  }
+
+  const { title, content, boardCategory, imageUrl, createdAt } = data;
+  const formattedImageUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${imageUrl}`;
+
+  return (
+    <article className="flex w-full flex-col justify-center overflow-scroll bg-white p-8">
+      <header className="mt-5 flex items-center gap-4">
+        <h2 className="text-5xl font-bold text-[#212529]">{title ? title : "제목없음"}</h2>
+        <div className="mt-auto flex gap-2 text-gray-500">
+          <span>{boardCategory} </span>
+          <span>•</span>
+          <span> {isoStringToCreatedTime(createdAt)}</span>
+        </div>
+      </header>
+
+      {imageUrl && (
+        <figure className="relative mt-10 h-[300px] w-[300px] overflow-hidden rounded-md">
+          <Image src={formattedImageUrl} alt="게시글 이미지" fill className="object-contain" />
+        </figure>
+      )}
+
+      <p className="mt-20 text-base text-[#171719]">{content}</p>
+    </article>
+  );
 };
 
 export default BoardDetailPage;

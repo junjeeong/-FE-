@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         hostname: "s.pstatic.net",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "front-mission.bigs.or.kr",
+        pathname: "**",
+      },
     ],
   },
 };
