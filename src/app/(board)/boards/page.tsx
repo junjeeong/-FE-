@@ -20,10 +20,10 @@ const BoardsPage = () => {
   }
 
   return (
-    <>
+    <div className="relative h-full w-full">
       <BoardMain currentPage={page} category={category as Category} />
       <PaginationBar currentPage={page} />
-    </>
+    </div>
   );
 };
 

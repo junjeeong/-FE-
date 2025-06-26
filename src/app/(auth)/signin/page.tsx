@@ -26,6 +26,7 @@ export default function SignInPage() {
       const res = await postSignIn(body);
       const { accessToken } = res.data;
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("profile", JSON.stringify({ username: body.username }));
       alert("로그인에 성공했습니다. 홈페이지로 이동합니다.");
       router.push("/");
     } catch (err) {
