@@ -4,6 +4,8 @@ import { authInstance } from "@/lib/axios";
 import { useRouter } from "next/navigation";
 
 const EditNDeleteButtons = ({ id }: { id: string }) => {
+  if (typeof window === "undefined") return null;
+
   const router = useRouter();
 
   const goEditPage = () => {
