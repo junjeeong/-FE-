@@ -39,7 +39,7 @@ export default function SignInPage() {
 
   return (
     <section className="flex h-auto w-[343px] flex-col items-center justify-center rounded-lg bg-white p-8 shadow-xl">
-      <Image src="/icon/logo.jpeg" alt="회사 로고" width={120} height={120} />
+      <Image src="/icon/logo.png" alt="회사 로고" width={120} height={120} />
       <div className="w-full rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-2 flex flex-col gap-2">
           <FormInput

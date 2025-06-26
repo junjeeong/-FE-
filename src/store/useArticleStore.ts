@@ -2,28 +2,42 @@ import { create } from "zustand";
 import { ArticlesByCategory, ArticleStore } from "@/types/article";
 
 const initialState: ArticlesByCategory = {
-  NOTICE: [],
-  FREE: [],
-  "Q&A": [],
-  ETC: [],
+  NOTICE: { list: [], totalCount: 0 },
+  FREE: { list: [], totalCount: 0 },
+  "Q&A": { list: [], totalCount: 0 },
+  ETC: { list: [], totalCount: 0 },
 };
 
 export const useArticleStore = create<ArticleStore>((set, get) => ({
-  allArticles: [],
+  allArticles: { list: [], totalCount: 0 },
   articlesByCategory: initialState,
 
-  setAllArticles: (articles) =>
+  updateAllArticles: (articles) => {
     set(() => ({
-      allArticles: articles,
-    })),
+      allArticles: {
+        list: articles,
+        totalCount: articles.length,
+      },
+    }));
+  },
 
-  setArticlesByCategory: (category, articles) =>
+  updateArticlesByCategory: (category, articles) => {
+    const filtered = articles.filter((article) => article.category === category);
     set((state) => ({
       articlesByCategory: {
         ...state.articlesByCategory,
-        [category]: articles,
+        [category]: {
+          list: filtered,
+          totalCount: filtered.length,
+        },
       },
-    })),
+    }));
+  },
 
-  getArticles: (category) => get().articlesByCategory[category],
+  selectAllArticles: () => {
+    return get().allArticles ?? { list: [], totalCount: 0 };
+  },
+  selectArticlesByCategory: (category) => {
+    return get().articlesByCategory[category] ?? { list: [], totalCount: 0 };
+  },
 }));

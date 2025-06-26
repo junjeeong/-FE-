@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const isLogin = cookieStore.get("refreshToken")?.value;
 
-  if (accessToken) {
+  if (isLogin) {
     redirect("/boards");
   } else {
     redirect("/signin");

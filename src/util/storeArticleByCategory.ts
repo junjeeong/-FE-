@@ -18,6 +18,6 @@ export function storeArticlesByCategory(allArticles: Article[]) {
   const store = useArticleStore.getState();
 
   (Object.keys(categorized) as Category[]).forEach((category) => {
-    store.setArticlesByCategory(category, categorized[category]);
+    store.updateArticlesByCategory(category, categorized[category]);
   });
 }

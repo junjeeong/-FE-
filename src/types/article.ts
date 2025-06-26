@@ -1,11 +1,15 @@
 import { BoardData } from "@/types/boards";
 
+export type Category = "NOTICE" | "FREE" | "Q&A" | "ETC" | "ALL";
 export type PostArticlePayload = BoardData;
 export type PatchArticlePayload = BoardData;
-export type ArticlesByCategory = {
-  [K in string]: Article[];
+export type ReponseArticles = {
+  list: Article[];
+  totalCount: number;
 };
-export type Category = "NOTICE" | "FREE" | "Q&A" | "ETC" | "ALL";
+export type ArticlesByCategory = {
+  [K in string]: ReponseArticles;
+};
 
 export interface Article {
   id: number;
@@ -15,9 +19,17 @@ export interface Article {
 }
 
 export interface ArticleStore {
-  allArticles: Article[];
+  allArticles: ReponseArticles;
   articlesByCategory: ArticlesByCategory;
-  setAllArticles: (articles: Article[]) => void;
-  setArticlesByCategory: (category: string, articles: Article[]) => void;
-  getArticles: (category: string) => Article[];
+
+  updateAllArticles: (articles: Article[]) => void;
+  updateArticlesByCategory: (category: string, articles: Article[]) => void;
+  selectAllArticles: () => {
+    list: Article[];
+    totalCount: number;
+  };
+  selectArticlesByCategory: (category: Category) => {
+    list: Article[];
+    totalCount: number;
+  };
 }
