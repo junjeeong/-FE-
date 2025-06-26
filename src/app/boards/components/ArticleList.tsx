@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { BoardPreviewData } from "@/types/boards";
 import isoStringToTime from "@/util/isoStringToTime";
 
-const ArticleList = ({ list }: { list: BoardPreviewData[] }) => {
+const ArticleList = ({ list }: { list: BoardPreviewData[] | null }) => {
   const router = useRouter();
 
   const goDetailPage = (id: number) => {
@@ -22,7 +22,7 @@ const ArticleList = ({ list }: { list: BoardPreviewData[] }) => {
           </tr>
         </thead>
         <tbody className="text-sm">
-          {list.map((el) => (
+          {list?.map((el) => (
             <tr
               key={el.id}
               onClick={() => goDetailPage(el.id)}

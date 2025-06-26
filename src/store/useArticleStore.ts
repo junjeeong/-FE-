@@ -12,7 +12,7 @@ export const useArticleStore = create<ArticleStore>((set, get) => ({
   allArticles: { list: [], totalCount: 0 },
   articlesByCategory: initialState,
 
-  setAllArticles: (articles) => {
+  updateAllArticles: (articles) => {
     set(() => ({
       allArticles: {
         list: articles,
@@ -21,7 +21,7 @@ export const useArticleStore = create<ArticleStore>((set, get) => ({
     }));
   },
 
-  setArticlesByCategory: (category, articles) => {
+  updateArticlesByCategory: (category, articles) => {
     const filtered = articles.filter((article) => article.category === category);
     set((state) => ({
       articlesByCategory: {
@@ -34,6 +34,10 @@ export const useArticleStore = create<ArticleStore>((set, get) => ({
     }));
   },
 
-  getAllArticles: () => get().allArticles,
-  getArticlesByCategory: (category) => get().articlesByCategory[category],
+  selectAllArticles: () => {
+    return get().allArticles ?? { list: [], totalCount: 0 };
+  },
+  selectArticlesByCategory: (category) => {
+    return get().articlesByCategory[category] ?? { list: [], totalCount: 0 };
+  },
 }));

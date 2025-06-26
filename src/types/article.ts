@@ -3,11 +3,12 @@ import { BoardData } from "@/types/boards";
 export type Category = "NOTICE" | "FREE" | "Q&A" | "ETC" | "ALL";
 export type PostArticlePayload = BoardData;
 export type PatchArticlePayload = BoardData;
+export type ReponseArticles = {
+  list: Article[];
+  totalCount: number;
+};
 export type ArticlesByCategory = {
-  [K in string]: {
-    list: Article[];
-    totalCount: number;
-  };
+  [K in string]: ReponseArticles;
 };
 
 export interface Article {
@@ -18,10 +19,7 @@ export interface Article {
 }
 
 export interface ArticleStore {
-  allArticles: {
-    list: Article[];
-    totalCount: number;
-  };
+  allArticles: ReponseArticles;
   articlesByCategory: ArticlesByCategory;
 
   updateAllArticles: (articles: Article[]) => void;
