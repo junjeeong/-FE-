@@ -1,4 +1,3 @@
-import { getAllArticles } from "@/api/getAllArticles";
 import { create } from "zustand";
 import { ArticlesByCategory, ArticleStore } from "@/types/article";
 

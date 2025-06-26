@@ -24,13 +24,13 @@ export interface ArticleStore {
   };
   articlesByCategory: ArticlesByCategory;
 
-  setAllArticles: (articles: Article[]) => void;
-  setArticlesByCategory: (category: string, articles: Article[]) => void;
-  getAllArticles: () => {
+  updateAllArticles: (articles: Article[]) => void;
+  updateArticlesByCategory: (category: string, articles: Article[]) => void;
+  selectAllArticles: () => {
     list: Article[];
     totalCount: number;
   };
-  getArticlesByCategory: (category: Category) => {
+  selectArticlesByCategory: (category: Category) => {
     list: Article[];
     totalCount: number;
   };
