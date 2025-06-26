@@ -22,7 +22,7 @@ const Navigation = () => {
           key={cat}
           onClick={() => navigateToCategory(cat)}
           className={clsx(
-            "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400",
+            "ml-6 flex h-full flex-1 items-center text-lg font-bold text-[#4B5563] hover:text-blue-400 sm:text-sm md:text-lg",
             currentCategory === cat ? "pointer-events-none text-blue-400" : "",
           )}
         >

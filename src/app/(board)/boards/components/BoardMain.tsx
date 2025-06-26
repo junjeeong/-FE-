@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Article, Category } from "@/types/article";
 import { useArticleStore } from "@/store/useArticleStore";
 import Title from "@/app/(board)/boards/components/Title";
-import SearchArticleBar from "@/app/(board)/boards/components/SearchArticleBar";
 import ArticleList from "@/app/(board)/boards/components/ArticleList";
 import useDisplayedArticles from "@/hook/useDisplayedArticles";
 
@@ -28,7 +27,6 @@ const BoardMain = ({ currentPage, category }: BoardMainProps) => {
     <div className="flex w-full max-w-[1200px] flex-col gap-6">
       <div className="flex items-center">
         <Title category={category} />
-        <SearchArticleBar />
       </div>
       <ArticleList list={displayedArticles} />
     </div>
