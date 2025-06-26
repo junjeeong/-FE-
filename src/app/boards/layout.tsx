@@ -7,7 +7,7 @@ export default function BoardsLayout({ children }: { children: React.ReactNode }
   return (
     <BoardsPageLayout>
       <Header />
-      {children}
+      <main className="flex h-[600px] w-full flex-col bg-white p-8">{children}</main>
       <CreateAritcleFloatingButton />
     </BoardsPageLayout>
   );

@@ -19,10 +19,10 @@ const BoardsPage = () => {
   }
 
   return (
-    <main className="flex w-full flex-col justify-center bg-white p-8">
+    <>
       <BoardMain currentPage={page} category={category as Category} />
       <PaginationBar currentPage={page} />
-    </main>
+    </>
   );
 };
 

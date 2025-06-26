@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-[#f3f4f6]">
+    <div className="flex h-screen w-screen items-center justify-center bg-[#f3f4f6] px-5">
       {children}
     </div>
   );
