@@ -17,7 +17,7 @@ const Navigation = () => {
 
   return (
     <div className="mr-auto flex gap-2">
-      {["NOTICE", "FREE", "QnA", "ETC"].map((cat) => (
+      {["NOTICE", "FREE", "QNA", "ETC"].map((cat) => (
         <button
           key={cat}
           onClick={() => navigateToCategory(cat)}
@@ -30,7 +30,7 @@ const Navigation = () => {
             {
               NOTICE: "공지",
               FREE: "자유",
-              QnA: "질문",
+              QNA: "질문",
               ETC: "기타",
             }[cat]
           }

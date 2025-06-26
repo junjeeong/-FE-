@@ -1,6 +1,6 @@
 import { BoardData } from "@/types/boards";
 
-export type Category = "NOTICE" | "FREE" | "Q&A" | "ETC" | "ALL";
+export type Category = "NOTICE" | "FREE" | "QNA" | "ETC" | "ALL";
 export type PostArticlePayload = BoardData;
 export type PatchArticlePayload = BoardData;
 export type ReponseArticles = {

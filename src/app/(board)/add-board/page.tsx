@@ -1,10 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Category } from "@/types/article";
 import ImageUploader from "@/app/(board)/boards/components/ImageUploader";
 import postArticle from "@/api/postArticle";
-import { useRouter } from "next/navigation";
 
 interface FormData {
   title: string;
@@ -101,7 +101,7 @@ const AddBoardPage = () => {
           >
             <option value="NOTICE">공지</option>
             <option value="FREE">자유</option>
-            <option value="Q&A">질문</option>
+            <option value="QNA">질문</option>
             <option value="ETC">기타</option>
           </select>
           <div className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-500">

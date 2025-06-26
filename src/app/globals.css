@@ -3,6 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --transition-duration: 200ms;
 }
 
 @theme inline {
@@ -16,6 +17,10 @@
     --background: #f3f4f6;
     --foreground: #ffffff;
   }
+}
+
+* {
+  transition: all var(--transition-duration);
 }
 
 *:focus,
