@@ -10,8 +10,8 @@ const useInitializeArticles = () => {
     const fetch = async () => {
       try {
         const res = await getAllArticles();
-        setAllArticles(res.content);
-        storeArticlesByCategory(res.content);
+        setAllArticles(res.content.list);
+        storeArticlesByCategory(res.content.list);
       } catch (err) {
         console.error("getAllArticles 실행 도중 오류 발생", err);
       }
