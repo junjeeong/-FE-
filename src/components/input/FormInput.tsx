@@ -28,26 +28,25 @@ const FormInput = ({ id, label, type = "text", placeholder, register, error }: F
       <label htmlFor={id} className="font-semibold text-[#1F2937]">
         {label}
       </label>
-      <div className="relative w-full">
+      <div className="relative flex w-full flex-col">
         <input
           id={id}
           type={isPasswordInput ? (view ? "text" : "password") : type}
           placeholder={placeholder}
           {...register}
           className={clsx(
-            "mt-2 h-14 w-full rounded-[12px] bg-[#F3F4F6] px-6 py-4 placeholder:text-[#9CA3AF]",
+            "mt-2 h-14 w-[280px] rounded-[12px] bg-[#F3F4F6] px-6 py-4 placeholder:text-[#9CA3AF]",
             error && "border border-red-500",
           )}
         />
         {isPasswordInput && (
-          <button onClick={togglePasswordView} className="absolute top-[24px] right-4">
-            <Image
-              src={view ? "/icon/visible.svg" : "/icon/unvisible.svg"}
-              width={24}
-              height={24}
-              alt="비밀번호 보기"
-            />
-          </button>
+          <Image
+            src={view ? "/icon/visible.svg" : "/icon/unvisible.svg"}
+            width={24}
+            height={24}
+            alt="비밀번호 보기"
+            className="absolute top-[24px] right-4"
+          />
         )}
         <p
           className={clsx(

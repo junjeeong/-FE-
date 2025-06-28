@@ -1,14 +1,16 @@
 interface AuthButtonProps {
   type: "로그인" | "회원가입";
+  isValid: boolean;
 }
 
-const AuthButton = ({ type = "로그인" }: AuthButtonProps) => {
+const AuthButton = ({ type = "로그인", isValid }: AuthButtonProps) => {
   const isType = type === "로그인" ? "로그인" : "회원가입";
 
   return (
     <button
       type="submit"
-      className="mt-4 w-full h-14 rounded-full flex justify-center bg-[#9CA3AF] text-lg font-semibold items-center text-white ative:bg-[#3b82f6] hover:bg-[#3b82f6] cursor-pointer"
+      disabled={!isValid}
+      className="disabled:hover-none mt-4 flex h-14 w-full cursor-pointer items-center justify-center rounded-full bg-[#3b82f6] text-lg font-semibold text-white hover:bg-[#3b82f6] disabled:bg-gray-300"
     >
       {isType}
     </button>

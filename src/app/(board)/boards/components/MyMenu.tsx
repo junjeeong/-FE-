@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import postLogout from "@/api/postLogout";
 
 const MyMenu = () => {
@@ -17,7 +18,7 @@ const MyMenu = () => {
   const handleLogout = async () => {
     try {
       await postLogout();
-      alert("로그아웃 되었습니다.");
+      toast.success("로그아웃 되었습니다.");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("profile");
       router.push("/signin");

@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const EditNDeleteButtons = ({ id }: { id: string }) => {
-  if (typeof window === "undefined") return null;
-
   const router = useRouter();
 
   const goEditPage = () => {

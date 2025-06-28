@@ -5,8 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Logo = () => {
-  if (typeof window === "undefined") return null;
-
   const view = useViewport();
 
   return (

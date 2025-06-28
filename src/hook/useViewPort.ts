@@ -10,7 +10,9 @@ const getViewport = (width: number): Viewport => {
   return "desktop";
 };
 
-export default function useViewport(): Viewport | undefined {
+export default function useViewport(): Viewport | null {
+  if (typeof window === "undefined") return null;
+
   const [viewport, setViewport] = useState<Viewport>(() =>
     typeof window !== "undefined" ? getViewport(window.innerWidth) : "desktop",
   );
